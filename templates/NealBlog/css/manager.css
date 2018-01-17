@@ -1,0 +1,6 @@
+/* *******************aside**************************** */
+div#aside{
+	position: absolute;
+	left: 0;
+	top: 40%;
+}

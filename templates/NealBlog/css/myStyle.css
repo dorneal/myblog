@@ -1,0 +1,280 @@
+ /*全局样式 */
+*{padding: 0;margin: 0;}
+a{text-decoration: none;}
+body{background-color: #f4f4f4;}
+html{background-color: #f4f4f4;}
+
+/* 具体样式表 */
+
+/* ******************************头部样式********************************* */
+div#header{
+	height: 200px;
+	background-color: #333;
+	box-shadow: 0 10px 30px #ccc;
+	overflow: hidden;
+}
+/* *********************************************************************** */
+
+
+
+/* ******************************主体样式********************************* */
+div#main{
+	background-color: #f4f4f4;
+	min-width: 900px;
+	max-width: 67%;
+	margin: 0 auto;
+	overflow: hidden;
+	z-index: 10000;
+	margin-bottom: 40px;
+}
+div#main div#content{
+	width: 70%;
+	background-color: #fff;
+	float: left;
+}
+div#main div#aside{
+	width: 25%;
+	margin-left: 2.5%;
+	float: left;
+	margin-right: 2.5%;
+}
+
+/* ******************************主体内容样式***************************** */
+div#main div#content div.content-top{
+	width: 100%;
+	height: 50px;
+	font-size: 1.4em;
+	line-height: 40px;
+	text-align: center;
+	font-family: "宋体",serif;
+	font-weight: 900;
+	padding: 5px 10px 5px 30px;
+	border-bottom: 1px solid #000;
+}
+div#main div#content div.content-top div.content-top-left{
+	min-width: 30%;
+	height: 100%;
+	float: left;
+}
+div#main div#content div.content-top div.content-top-right{
+	height: 100%;
+	min-width: 40%;
+	float: right;
+}
+
+/* *****************************主体顶部样式******************************* */
+div.content-top-left input[type="checkbox"]{
+	width: 25px;
+	height: 25px;
+}
+div.content-top-right input[type="search"]{
+	width: 130px;
+	height: 40px;
+	border-radius: 40px;
+	outline: none;
+	border: 1px solid #000;
+	font-size: 1.2em;
+	padding-left: 15px;
+}
+div.content-top-right input[type="search"]:hover{
+	width: 200px;
+}
+/* *********************************************************************** */
+
+
+/* ***************************主体文章简介******************************** */
+div.article{
+	width: 100%;
+	height: 180px;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+div.article:hover{
+	background-color: #f4f4f4;
+}
+div.article h3{
+	margin: 0;
+}
+div.article div.artilce-img-info{
+	float: left;
+	min-width: 160px;
+	height: 160px;
+	background-color: #988177;
+	margin-right: 10px;
+	overflow: hidden;
+	border: 1px solid #000;
+}
+div.article div.artilce-img-info a img{
+	min-width: 160px;
+	height: 160px;
+}
+div.article div.article-content-introduction{
+	float: left;
+	min-width: 380px;
+	max-width: 63%;
+	height: 160px;
+	padding: 5px;
+}
+div.article-title-link{
+	width: 100%;
+}
+div.article-content{
+	width: 100%;
+	height: 100px;
+	padding: 5px 0px 5px 20px;
+}
+div.date-author-info{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: left;
+	font-size: 1.1em;
+}
+
+/* *********************************************************************** */
+
+
+/* ******************************侧边栏样式******************************* */
+div#aside div.aside-info,div#aside div.aside-rank,div#aside div.aside-category,div#aside div.aside-suggest{
+	width: 100%;
+	margin-bottom: 30px;
+	background-color: #fff;
+	box-shadow: 10px 10px 30px #ccc;
+}
+div#aside div.aside-info div.aventar{
+	padding-top: 10px;
+	width: 100%;
+	height: 175px;
+	border-bottom: 1px solid #000;
+	text-align: center;
+}
+div#aside div.aside-info div.aventar h3{
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+div#aside div.aside-info div.aventar p{
+	font-size: 1.2em;
+	font-family: "楷体",serif;
+	font-weight: 700;
+}
+div#aside div.aside-info div.aventar img{
+	width: 100px;
+	border-radius: 100px;
+}
+div.rank-count{
+	padding: 10px;
+	font-size: 1.2em;
+}
+div.rank-count li,div.aside-rank li,div.aside-category li,div.aside-suggest li{
+	list-style-type: none;
+}
+div.aside-info{height: 305px;}
+div.aside-rank{height: 275px;overflow: hidden;}
+div.aside-category{height: 265px;}
+div.aside-suggest{height: 260px;}
+div.aside-category,div.aside-rank,div.aside-suggest{
+	padding: 1px 0px 0px 20px;
+	font-size: 1.3rem;
+}
+div.aside-category h3,div.aside-rank h3,div.aside-suggest h3{
+	width: 90%;
+	border-bottom: 1px solid #000;
+	margin-bottom: 10px;
+}
+div.aside-category li{
+	margin-top: 10px;
+	font-size: 1.3em;
+}
+div.aside-rank li,div.aside-suggest li{
+	font-size: 1.1em;
+}
+/* *********************************************************************** */
+/* *********************************************************************** */
+
+
+
+
+/* ******************************尾部样式********************************* */
+#footer{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	font-size: 1.2em;
+}
+/* *********************************************************************** */
+
+
+
+/* *****************************其他样式********************************** */
+/* **************************滑动侧边栏************************************ */
+div#contact{
+	position: fixed;
+    top: 55%;
+    left: 0;
+    width: 50px;
+    height: 204px;
+    text-decoration: none;
+    z-index: 1000;
+}
+div#contact ul li {
+	list-style-type: none;
+    width: 50px;
+    height: 40px;
+    margin-top: 1px;
+}
+div#contact ul li a{
+	display: block;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    color: #000;
+    font-size: 2.5em;
+    border-radius: 50%;
+}
+div#contact ul li a:hover{
+	text-decoration: none;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+/* ********************************************************************* */
+
+/* **************************************************************** li */
+span.li-span{
+	float: right;
+	margin-right: 10px;
+	color: #ccc;
+}
+/* ********************************************************************* */
+
+
+/**
+返回顶部样式
+ */
+#elevator_item {
+    width: 60px;
+    height: 100px;
+    position: fixed;
+    right: 15px;
+    bottom: 10%;
+    -webkit-transition: opacity .4s ease-in-out;
+    -moz-transition: opacity .4s ease-in-out;
+    -o-transition: opacity .4s ease-in-out;
+    opacity: 1;
+    z-index: 100020;
+    display: none;
+}
+
+#elevator {
+    display: block;
+    width: 60px;
+    height: 50px;
+    background: url(../images/icon/icon_top.png) center center no-repeat;
+    background-color: #444;
+    background-color: rgba(0, 0, 0, .6);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+    cursor: pointer;
+}
+
+/* ********************************************************************* */

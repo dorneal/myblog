@@ -1,0 +1,68 @@
+DROP TABLE
+IF EXISTS t_user,
+ t_article,
+ t_category,
+ t_visit,
+ t_like,
+ t_view;
+
+-- 用户表
+CREATE TABLE t_user (
+	-- 用户ID
+	user_id INT NOT NULL PRIMARY KEY,
+	-- 用户名
+	user_name VARCHAR (20) NOT NULL,
+	-- 用户密码
+	user_pass VARCHAR (32) NOT NULL
+) ENGINE = INNODB;
+
+-- 文章表
+CREATE TABLE t_article (
+	-- 文章ID
+	article_id INT NOT NULL PRIMARY KEY auto_increment,
+	-- 文章标题
+	article_title VARCHAR (50) NOT NULL,
+	-- 创作时间
+	article_time TIMESTAMP NOT NULL,
+	-- 文章内容
+	article_content text NOT NULL,
+	-- 文章是否原创
+	article_tag VARCHAR (10) NOT NULL DEFAULT '原创',
+	-- 文章类别
+	category_id INT NOT NULL
+) ENGINE = INNODB;
+
+-- 文章类别表
+CREATE TABLE t_category (
+	-- 类别ID
+	category_id INT NOT NULL PRIMARY KEY,
+	-- 类别名
+	category_name VARCHAR (50) NOT NULL
+) ENGINE = INNODB;
+
+-- 来访表
+CREATE TABLE t_visit (
+	-- 来访ID
+	visit_id INT NOT NULL PRIMARY KEY auto_increment,
+	-- 来访IP
+	visit_IP VARCHAR (15) NOT NULL
+) ENGINE = INNODB;
+
+-- 文章浏览次数表
+CREATE TABLE t_view (
+	view_id INT NOT NULL PRIMARY KEY auto_increment,
+	-- 文章ID
+	article_id INT NOT NULL,
+	-- 来访ID
+	visit_id INT NOT NULL
+) ENGINE = INNODB;
+
+-- 点赞表
+CREATE TABLE t_like (
+	-- 点赞ID
+	like_id INT NOT NULL PRIMARY KEY auto_increment,
+	-- 文章ID
+	article_id INT NOT NULL,
+	-- 来访ID
+	visit_id INT NOT NULL
+) ENGINE = INNODB;
