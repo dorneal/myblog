@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neal.myblog.mapper.ArticleMapper">
+    <resultMap id="articleVo" type="com.neal.myblog.entity.TArticleVO">
+        <!--文章-->
+        <collection column="t_article" property="tArticleEX" javaType="com.neal.myblog.entity.TArticleEX">
+            <id column="article_id" jdbcType="INTEGER" property="articleId"/>
+            <result column="article_title" jdbcType="VARCHAR" property="articleTitle"/>
+            <result column="article_time" jdbcType="TIMESTAMP" property="articleTime"/>
+            <result column="article_content" jdbcType="VARCHAR" property="articleContent"/>
+            <result column="article_tag" jdbcType="VARCHAR" property="articleTag"/>
+            <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        </collection>
+        <!--类别-->
+        <collection property="tCategory" column="t_category" javaType="com.neal.myblog.entity.TCategory">
+            <id column="category_id" jdbcType="INTEGER" property="categoryId"/>
+            <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        </collection>
+        <!--点赞-->
+        <collection property="tLike" column="t_like" javaType="com.neal.myblog.entity.TLike">
+            <id column="like_id" jdbcType="INTEGER" property="likeId"/>
+            <result column="article_id" jdbcType="INTEGER" property="articleId"/>
+            <result column="visit_id" jdbcType="INTEGER" property="visitId"/>
+        </collection>
+        <!--浏览-->
+        <collection property="tView" column="t_view" javaType="com.neal.myblog.entity.TView">
+            <id column="view_id" jdbcType="INTEGER" property="viewId"/>
+            <result column="article_id" jdbcType="INTEGER" property="articleId"/>
+            <result column="visit_id" jdbcType="INTEGER" property="visitId"/>
+        </collection>
+    </resultMap>
+</mapper>

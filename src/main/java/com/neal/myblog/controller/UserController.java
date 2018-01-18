@@ -25,24 +25,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Autowired
-    Configuration configuration;
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> login(TUser user, HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>(3);
-        TUser tUser = userService.login(user);
-        if (tUser != null) {
-            request.getSession().setAttribute("user", tUser);
-            map.put("code", 1);
-            map.put("url", "/user/managerPage");
-        } else {
-            map.put("msg", "密码错误！！！");
-        }
-        return map;
-    }
-
     /**
      * 返回登录页面
      *
@@ -53,13 +35,18 @@ public class UserController {
         return "page/login";
     }
 
-    /**
-     * 返回管理页
-     *
-     * @return String
-     */
-    @RequestMapping("/managerPage")
-    public String managerPage() {
-        return "page/manager/manager";
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> login(TUser user, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>(3);
+        TUser tUser = userService.login(user);
+        if (tUser != null) {
+            request.getSession().setAttribute("user", tUser);
+            map.put("code", 1);
+            map.put("url", "/manager/managerPage");
+        } else {
+            map.put("msg", "密码错误！！！");
+        }
+        return map;
     }
 }

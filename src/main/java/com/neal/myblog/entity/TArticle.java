@@ -43,11 +43,11 @@ public class TArticle {
     }
 
 
-    public String getAritcleContent() {
+    public String getArticleContent() {
         return articleContent;
     }
 
-    public void setAritcleContent(String aritcleContent) {
+    public void setArticleContent(String aritcleContent) {
         this.articleContent = aritcleContent;
     }
 

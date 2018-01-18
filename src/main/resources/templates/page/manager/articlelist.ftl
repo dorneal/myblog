@@ -4,20 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>后台管理</title>
-    <link rel="shortcut icon" href="../../../static/images/icon/icon.ico">
-    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../static/css/manager.css">
+    <link rel="shortcut icon" href="/images/icon/icon.ico">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/manager.css">
 </head>
 <body>
 <!-- 侧边栏 -->
-<div id="aside">
-    <ul>
-        <span>NealBlog</span>
-        <li><a href="" title="">文章管理</a></li>
-        <li><a href="" title="">文章发布</a></li>
-        <li><a href="" title="">管理</a></li>
-    </ul>
-</div>
+<#include "./aside.ftl">
 
 <!-- 主体 -->
 <div class="container">

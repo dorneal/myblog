@@ -4,22 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>文章发布</title>
-    <link rel="shortcut icon" href="../../../static/images/icon/icon.ico">
-    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../static/css/manager.css">
-    <script type="text/javascript" src="../../../static/js/jquery.min.js"></script>
-    <script src="../../../static/js/xss.js"></script>
+    <link rel="shortcut icon" href="/images/icon/icon.ico">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/manager.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script src="/js/xss.js"></script>
 </head>
 <body>
-<!-- 侧边栏 -->
-<div id="aside">
-    <ul>
-        <span>NealBlog</span>
-        <li><a href="" title="">文章管理</a></li>
-        <li><a href="" title="">文章发布</a></li>
-        <li><a href="" title="">管理</a></li>
-    </ul>
-</div>
+<#include "./aside.ftl">
 
 <div class="container">
     <div class="panel panel-default">
@@ -59,7 +51,7 @@
                     <br>
                     <div id="editor"></div>
                     <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-                    <script type="text/javascript" src="../../../static/js/wangEditor.min.js"></script>
+                    <script type="text/javascript" src="/js/wangEditor.min.js"></script>
                     <script type="text/javascript">
                         var E = window.wangEditor;
                         var editor = new E('#editor');

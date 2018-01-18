@@ -1,14 +1,21 @@
 package com.neal.myblog.entity;
 
 
+import javax.persistence.*;
+
 /**
  * 文章属性实体类
  *
  * @author neal
  */
+@Entity
+@Table(name = "t_category")
 public class TCategory {
 
+    @Id
+    @GeneratedValue
     private long categoryId;
+    @Column(nullable = false, name = "category_name")
     private String categoryName;
 
 

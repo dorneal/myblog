@@ -1,14 +1,21 @@
 package com.neal.myblog.entity;
 
 
+import javax.persistence.*;
+
 /**
  * 来访实体类
  *
  * @author neal
  */
+@Entity
+@Table(name = "t_visit")
 public class TVisit {
 
+    @Id
+    @GeneratedValue
     private long visitId;
+    @Column(nullable = false, name = "visit_ip")
     private String visitIp;
 
 

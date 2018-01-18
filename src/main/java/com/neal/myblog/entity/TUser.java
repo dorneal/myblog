@@ -1,15 +1,22 @@
 package com.neal.myblog.entity;
 
 
+import javax.persistence.*;
+
 /**
  * 用户实体类
  *
  * @author neal
  */
+@Entity
+@Table(name = "t_user")
 public class TUser {
-
+    @Id
+    @GeneratedValue
     private long userId;
+    @Column(nullable = false, name = "user_name")
     private String userName;
+    @Column(nullable = false, name = "user_pass")
     private String userPass;
 
 
