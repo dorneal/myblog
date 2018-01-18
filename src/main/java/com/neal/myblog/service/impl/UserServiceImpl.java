@@ -1,7 +1,7 @@
 package com.neal.myblog.service.impl;
 
 import com.neal.myblog.entity.TUser;
-import com.neal.myblog.mapper.UserRepository;
+import com.neal.myblog.repository.UserRepository;
 import com.neal.myblog.service.UserService;
 
 import static com.neal.myblog.util.Base64.encode;

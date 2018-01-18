@@ -1,4 +1,4 @@
-package com.neal.myblog.mapper;
+package com.neal.myblog.repository;
 
 import com.neal.myblog.entity.TUser;
 import org.springframework.data.jpa.repository.Query;

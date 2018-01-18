@@ -125,35 +125,35 @@
                 </tbody>
             </table>
             <table class="table table-condensed">
-                <caption>作者管理</caption>
+                <caption>来访管理</caption>
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>名称</th>
-                    <th>发布文章数量</th>
+                    <th>IP</th>
                 </tr>
                 </thead>
-                <tbody>
-
+                <tbody id="tbodyVisit">
+                <#--<#list visitList as list>
                 <tr>
-                    <td>1</td>
-                    <td>neal</td>
-                    <td>17</td>
+                    <td>${list.visitId}</td>
+                    <td>${list.visitIp}</td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>每日美文</td>
-                    <td>0</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>我是励志师</td>
-                    <td>1413</td>
-                </tr>
-
+                </#list>-->
                 </tbody>
+                <script src="/js/jquery.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        var $tbodyVisit = $("#tbodyVisit");
+                        $.post("/manager/managerVisit", {page: 1, size: 1}, function (data) {
+                            $tbodyVisit.empty();
+                            var s = "";
+                            for (var i in data) {
+                                s += "<tr><td>"+data[i].visitId+"</td><td>"+data[i].visitIp+"</td></tr>";
+                            }
+                            $tbodyVisit.html(s);
+                        }, "json");
+                    });
+                </script>
             </table>
             <table class="table table-condensed">
                 <caption>类别管理</caption>
@@ -164,32 +164,12 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                <#list categoryList as list>
                 <tr>
-                    <td>1</td>
-                    <td>个人文章</td>
+                    <td>${list.categoryId}</td>
+                    <td>${list.categoryName}</td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>笔记</td>
-                </tr>
-
-                <tr>
-                    <td>5</td>
-                    <td>数据概述</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>网络美文</td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>每日一文</td>
-                </tr>
-
+                </#list>
                 </tbody>
             </table>
         </div>

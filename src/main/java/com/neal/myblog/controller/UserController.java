@@ -43,7 +43,7 @@ public class UserController {
         if (tUser != null) {
             request.getSession().setAttribute("user", tUser);
             map.put("code", 1);
-            map.put("url", "/manager/managerPage");
+            map.put("url", "/manager/managerArticle");
         } else {
             map.put("msg", "密码错误！！！");
         }
