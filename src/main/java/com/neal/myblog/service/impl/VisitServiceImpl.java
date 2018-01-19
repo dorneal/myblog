@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * 类别service 实现类
  *
@@ -21,11 +19,6 @@ public class VisitServiceImpl implements VisitService {
 
     @Autowired
     private VisitRepository visitRepository;
-
-    @Override
-    public List<TVisit> visitList() {
-        return visitRepository.visitList();
-    }
 
     @Override
     public Page<TVisit> findByPagination(Integer page, Integer size) {

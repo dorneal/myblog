@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-    <meta name="description" content="此代码内容为超萌的猫头鹰登录界面"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="我的博客后台登录"/>
     <title>登录</title>
     <link rel="shortcut icon" href="/images/icon/icon.ico">
     <link rel="stylesheet" href="/css/jq22.css">

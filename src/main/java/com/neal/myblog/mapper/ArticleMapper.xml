@@ -29,4 +29,9 @@
             <result column="visit_id" jdbcType="INTEGER" property="visitId"/>
         </collection>
     </resultMap>
+    <!--插入文章-->
+    <insert id="saveArticle" parameterType="com.neal.myblog.entity.TArticleEX">
+        INSERT INTO t_article (article_title, article_time, article_content, article_tag, category_id)
+        VALUES (#{articleTitle}, #{articleTime}, #{articleContent}, #{articleTag}, #{categoryId});
+    </insert>
 </mapper>

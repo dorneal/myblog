@@ -38,10 +38,10 @@ public class ManagerController {
      * 返回管理页
      *
      * @param modelMap ModelMap
-     * @return String
+     * @return 视图
      */
-    @RequestMapping("/managerArticle")
-    public String managerArticle(ModelMap modelMap) {
+    @RequestMapping("/manager")
+    public String manager(ModelMap modelMap) {
         List<TCategory> categoryList = categoryService.listCategory();
         modelMap.addAttribute("categoryList", categoryList);
         return "page/manager/manager";
@@ -52,7 +52,7 @@ public class ManagerController {
      *
      * @param page 当前页
      * @param size 页面大小
-     * @return Map
+     * @return json
      */
     @RequestMapping(value = "/managerVisit", method = RequestMethod.POST)
     @ResponseBody

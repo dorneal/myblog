@@ -22,42 +22,74 @@
         </div>
         <div class="panel-body">
             <div>
-                <form class="bs-example bs-example-form" role="form" action="#" method="post">
+                <form class="bs-example bs-example-form" role="form" action="/article/publishArticle" method="post"
+                      enctype="multipart/form-data">
                     <div class="input-group">
                         <span class="input-group-addon">文章标题</span>
-                        <input type="text" class="form-control" placeholder="Title" name="articletitle" maxlength="50">
+                        <input type="text" class="form-control" placeholder="Title" name="articleTitle" maxlength="50">
                     </div>
                     <br>
                     <div class="input-group">
-                        <span class="input-group-addon">文章作者</span>
-                        <select class="form-control" name="authorid">
-                            <option value="1">neal</option>
-                            <option value="2">每日美文</option>
-                            <option value="3">我是励志师</option>
+                        <span class="input-group-addon">发布时间</span>
+                        <input id="publishTime" type="text" class="form-control" placeholder="Time" name="articleTime"
+                               maxlength="50">
+                        <script>
+                            document.getElementById('publishTime').value = format(new Date().getTime());
+
+                            function add0(m) {
+                                return m < 10 ? '0' + m : m
+                            }
+
+                            function format(shijianchuo) {
+                                //shijianchuo是整数，否则要parseInt转换
+                                var time = new Date(shijianchuo);
+                                var y = time.getFullYear();
+                                var m = time.getMonth() + 1;
+                                var d = time.getDate();
+                                var h = time.getHours();
+                                var mm = time.getMinutes();
+                                var s = time.getSeconds();
+                                return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+                            }
+                        </script>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">是否原创</span>
+                        <select class="form-control" name="articleTag">
+                            <option value="原创">原创</option>
+                            <option value="转载">转载</option>
                         </select>
                     </div>
-                    <input type="hidden" class="form-control" placeholder="time" name="articletime" maxlength="50">
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">文章类别</span>
-                        <select class="form-control" name="categoryid">
-                            <option value="1">个人文章</option>
-                            <option value="2">笔记</option>
-                            <option value="5">数据概述</option>
-                            <option value="3">网络美文</option>
-                            <option value="4">每日一文</option>
+                        <select class="form-control" name="categoryId">
+                            <#list categoryList as list>
+                                <option value="${list.categoryId}">${list.categoryName}</option>
+                            </#list>
                         </select>
                     </div>
                     <br>
+                    <input type="hidden" name="articleContent" id="articleContent">
                     <div id="editor"></div>
-                    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
                     <script type="text/javascript" src="/js/wangEditor.min.js"></script>
                     <script type="text/javascript">
                         var E = window.wangEditor;
                         var editor = new E('#editor');
-                        // // 限制一次最多上传 5 张图片
+                        // 限制一次最多上传 5 张图片
                         editor.customConfig.uploadImgMaxLength = 5;
-                        editor.customConfig.uploadImgServer = '/upload';
+                        // 指定图片服务器
+                        editor.customConfig.uploadImgServer = '/article/uploadPhoto';
+                        editor.customConfig.uploadFileName = 'file';
+                        // 将 timeout 时间改为 3s
+                        editor.customConfig.uploadImgTimeout = 3000;
+                        editor.customConfig.uploadImgHooks = {
+                            customInsert: function (insertImg, result, editor) {
+                                var url = result.url;
+                                insertImg(url)
+                            }
+                        };
                         editor.create();
                     </script>
                     <br>
@@ -66,8 +98,9 @@
                         document.getElementById('btn1').addEventListener('click', function () {
                             var html = editor.txt.html();
                             var filterHtml = filterXSS(html);  // 此处进行 xss 攻击过滤
+                            document.getElementById("articleContent").value = filterHtml;
                             alert(filterHtml);
-                        }, false);
+                        });
                     </script>
                 </form>
             </div>

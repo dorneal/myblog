@@ -1,14 +1,13 @@
-package com.neal.myblog.mapper;
-
+package com.neal.myblog.service;
 
 import com.neal.myblog.entity.TArticleEX;
 
 /**
- * 文章Mapper
+ * 文章Service接口
  *
  * @author Neal
  */
-public interface ArticleMapper {
+public interface ArticleService {
     /**
      * 文章插入/发布
      *
