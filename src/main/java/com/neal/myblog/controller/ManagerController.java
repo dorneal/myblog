@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -42,23 +43,30 @@ public class ManagerController {
     @RequestMapping("/managerArticle")
     public String managerArticle(ModelMap modelMap) {
         List<TCategory> categoryList = categoryService.listCategory();
-        List<TVisit> visitList = visitService.visitList();
         modelMap.addAttribute("categoryList", categoryList);
-        modelMap.addAttribute("visitList", visitList);
         return "page/manager/manager";
     }
 
     /**
-     * 分页显示来访
+     * ajax请求分页显示来访
      *
      * @param page 当前页
      * @param size 页面大小
      * @return Map
      */
-    @RequestMapping("/managerVisit")
+    @RequestMapping(value = "/managerVisit", method = RequestMethod.POST)
     @ResponseBody
-    public List<TVisit> managerVisit(Integer page, Integer size) {
+    public Map<String, Object> managerVisit(Integer page, Integer size) {
+        Map<String, Object> map = new HashMap<>(3);
         Page<TVisit> page1 = visitService.findByPagination(page, size);
-        return page1.getContent();
+        List<TVisit> list = page1.getContent();
+        if (list.size() == 0) {
+            map.put("code", 0);
+            map.put("msg", "没有了!!!");
+        } else {
+            map.put("code", 1);
+            map.put("data", list);
+        }
+        return map;
     }
 }

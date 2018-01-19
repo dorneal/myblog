@@ -20,111 +20,6 @@
         </div>
         <div class="panel-body">
             <table class="table table-condensed">
-                <caption>总文章管理</caption>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>文章名称</th>
-                    <th>日期</th>
-                    <th>点击数</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr>
-                    <td>0</td>
-                    <td>我改变的事物</td>
-                    <td>2017年9月7日</td>
-                    <td>103</td>
-                    <td><a href="/manager/findByArticleId?articleid=0">更新</a> <a
-                            href="/manager/deleteArticle?articleid=0">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>6</td>
-                    <td>北平的秋</td>
-                    <td>2017年9月5日</td>
-                    <td>108</td>
-                    <td><a href="/manager/findByArticleId?articleid=6">更新</a> <a
-                            href="/manager/deleteArticle?articleid=6">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>7</td>
-                    <td>关于鲁迅</td>
-                    <td>2017年9月4日</td>
-                    <td>128</td>
-                    <td><a href="/manager/findByArticleId?articleid=7">更新</a> <a
-                            href="/manager/deleteArticle?articleid=7">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>8</td>
-                    <td>花脸雀</td>
-                    <td>2017年9月3日</td>
-                    <td>110</td>
-                    <td><a href="/manager/findByArticleId?articleid=8">更新</a> <a
-                            href="/manager/deleteArticle?articleid=8">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>9</td>
-                    <td>一个到处流浪的城市</td>
-                    <td>2017年9月2日</td>
-                    <td>120</td>
-                    <td><a href="/manager/findByArticleId?articleid=9">更新</a> <a
-                            href="/manager/deleteArticle?articleid=9">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>1444</td>
-                    <td>归并排序——原地归并排序</td>
-                    <td>2017年9月29日</td>
-                    <td>63</td>
-                    <td><a href="/manager/findByArticleId?articleid=1444">更新</a> <a
-                            href="/manager/deleteArticle?articleid=1444">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>1442</td>
-                    <td>符号表——基于二叉查找树的符号表</td>
-                    <td>2017年9月28日</td>
-                    <td>59</td>
-                    <td><a href="/manager/findByArticleId?articleid=1442">更新</a> <a
-                            href="/manager/deleteArticle?articleid=1442">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>1443</td>
-                    <td>背包、队列和栈——下压堆栈</td>
-                    <td>2017年9月28日</td>
-                    <td>49</td>
-                    <td><a href="/manager/findByArticleId?articleid=1443">更新</a> <a
-                            href="/manager/deleteArticle?articleid=1443">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>1440</td>
-                    <td>环境配置——Idea安装配置</td>
-                    <td>2017年9月27日</td>
-                    <td>86</td>
-                    <td><a href="/manager/findByArticleId?articleid=1440">更新</a> <a
-                            href="/manager/deleteArticle?articleid=1440">删除</a></td>
-                </tr>
-
-                <tr>
-                    <td>1439</td>
-                    <td>环境配置——Sublime Text3配置</td>
-                    <td>2017年9月26日</td>
-                    <td>140</td>
-                    <td><a href="/manager/findByArticleId?articleid=1439">更新</a> <a
-                            href="/manager/deleteArticle?articleid=1439">删除</a></td>
-                </tr>
-
-                </tbody>
-            </table>
-            <table class="table table-condensed">
                 <caption>来访管理</caption>
                 <thead>
                 <tr>
@@ -133,28 +28,52 @@
                 </tr>
                 </thead>
                 <tbody id="tbodyVisit">
-                <#--<#list visitList as list>
-                <tr>
-                    <td>${list.visitId}</td>
-                    <td>${list.visitIp}</td>
-                </tr>
-                </#list>-->
                 </tbody>
-                <script src="/js/jquery.min.js"></script>
-                <script>
-                    $(document).ready(function () {
-                        var $tbodyVisit = $("#tbodyVisit");
-                        $.post("/manager/managerVisit", {page: 1, size: 1}, function (data) {
+            </table>
+            <ul class="pagination">
+                <li><a onclick="getPrePage()">«</a></li>
+                <li class="active"><a name="currentPage">第<span id="pageNum"></span>页</a></li>
+                <li><a onclick="getNextPage()">»</a></li>
+            </ul>
+            <script src="/js/jquery.min.js"></script>
+            <script>
+                //初始化
+                $(document).ready(getPage(0, 10));
+
+                var $a = $("li.active").find("a[name=currentPage]").find("span#pageNum");
+
+                // 请求
+                function getPage(page, size) {
+                    var $tbodyVisit = $("#tbodyVisit");
+                    $.post("/manager/managerVisit", {page: page, size: size}, function (data) {
+                        if (data.code === 1) {
                             $tbodyVisit.empty();
                             var s = "";
-                            for (var i in data) {
-                                s += "<tr><td>"+data[i].visitId+"</td><td>"+data[i].visitIp+"</td></tr>";
+                            for (var i in data.data) {
+                                s += "<tr><td>" + data.data[i].visitId + "</td><td>" + data.data[i].visitIp + "</td></tr>";
                             }
                             $tbodyVisit.html(s);
-                        }, "json");
-                    });
-                </script>
-            </table>
+                            $a.text(page);
+                        } else {
+                            alert(data.msg);
+                        }
+                    }, "json")
+                }
+
+                // 上一页
+                function getPrePage() {
+                    if (parseInt($a.text()) > 0) {
+                        getPage((parseInt($a.text()) - 1), 10);
+                    } else {
+                        getPage(0, 10);
+                    }
+                }
+
+                // 下一页
+                function getNextPage() {
+                    getPage((parseInt($a.text()) + 1), 10);
+                }
+            </script>
             <table class="table table-condensed">
                 <caption>类别管理</caption>
                 <thead>
