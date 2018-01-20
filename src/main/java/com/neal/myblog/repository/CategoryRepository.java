@@ -18,6 +18,6 @@ public interface CategoryRepository extends CrudRepository<TCategory, Long> {
      *
      * @return List
      */
-    @Query("SELECT c.categoryId,c.categoryName FROM TCategory c")
+    @Query("SELECT c FROM TCategory c")
     List<TCategory> listCategory();
 }

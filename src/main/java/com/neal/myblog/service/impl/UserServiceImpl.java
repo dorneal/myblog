@@ -22,10 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public TUser login(TUser tUser) {
-        /* 解密 */
+        /* 两次加密 */
         String pass1 = tUser.getUserPass();
         pass1 = encode(encode(pass1));
-        tUser.setUserPass(pass1);
-        return userRepository.login(tUser.getUserName(), tUser.getUserPass());
+        return userRepository.login(tUser.getUserName(), pass1);
     }
 }

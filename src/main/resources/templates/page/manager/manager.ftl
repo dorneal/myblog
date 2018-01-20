@@ -83,7 +83,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <#list categoryList as list>
+                <#list categoryList! as list>
                 <tr>
                     <td>${list.categoryId}</td>
                     <td>${list.categoryName}</td>
