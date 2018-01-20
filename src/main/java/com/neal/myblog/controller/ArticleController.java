@@ -1,6 +1,7 @@
 package com.neal.myblog.controller;
 
 import com.neal.myblog.entity.TArticleEX;
+import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.entity.TCategory;
 import com.neal.myblog.service.ArticleService;
 import com.neal.myblog.service.CategoryService;
@@ -36,7 +37,9 @@ public class ArticleController {
      * @return 视图
      */
     @RequestMapping("/managerArticle")
-    public String managerArticle() {
+    public String managerArticle(ModelMap modelMap) {
+        List<TArticleVO> list = articleService.listArticleByManager();
+        modelMap.addAttribute("articleList",list);
         return "page/manager/articleList";
     }
 
