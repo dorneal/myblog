@@ -46,7 +46,10 @@ public class UserController {
         Map<String, Object> map = new HashMap<>(3);
         TUser tUser = userService.login(user);
         if (tUser != null) {
+            // 往session中放入用户
             request.getSession().setAttribute("user", tUser);
+            // 设置session过期时间
+            request.getSession().setMaxInactiveInterval(30 * 60);
             map.put("code", 1);
             map.put("url", "/manager/manager");
         } else {
