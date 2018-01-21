@@ -26,4 +26,19 @@ public class ArticleServiceImpl implements ArticleService {
     public List<TArticleVO> listArticleByManager() {
         return articleMapper.listArticleByManager();
     }
+
+    @Override
+    public void updateArticle(TArticleEX tArticleEX) {
+        articleMapper.updateArticle(tArticleEX);
+    }
+
+    @Override
+    public void deleteArticle(long id) {
+        articleMapper.deleteArticle(id);
+    }
+
+    @Override
+    public TArticleVO getArticleById(long id) {
+        return articleMapper.getArticleById(id);
+    }
 }

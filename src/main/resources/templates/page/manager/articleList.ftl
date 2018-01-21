@@ -48,8 +48,8 @@
                     <td>${list.tArticleEX.articleTitle}</td>
                     <td>${list.tCategory.categoryName}</td>
                     <td>
-                        <a href="">更新</a>
-                        <a href="">删除</a>
+                        <a href="/article/toUpdateArticlePage?articleId=${list.tArticleEX.articleId}">更新</a>
+                        <a href="javascript:if(confirm('确实要删除吗?'))location='/article/deleteArticle?articleId=${list.tArticleEX.articleId}'">删除</a>
                     </td>
                 </tr>
                 </#list>

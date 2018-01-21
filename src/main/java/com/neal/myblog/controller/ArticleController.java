@@ -39,8 +39,48 @@ public class ArticleController {
     @RequestMapping("/managerArticle")
     public String managerArticle(ModelMap modelMap) {
         List<TArticleVO> list = articleService.listArticleByManager();
-        modelMap.addAttribute("articleList",list);
+        modelMap.addAttribute("articleList", list);
         return "page/manager/articleList";
+    }
+
+    /**
+     * 跳转到更新编辑页面
+     *
+     * @param articleId 文章ID
+     * @param modelMap  ModelMap
+     * @return 视图
+     */
+    @RequestMapping("/toUpdateArticlePage")
+    public String toUpdateArticlePage(long articleId, ModelMap modelMap) {
+        TArticleVO articleVO = articleService.getArticleById(articleId);
+        List<TCategory> categoryList = categoryService.listCategory();
+        modelMap.addAttribute("articleVO", articleVO);
+        modelMap.addAttribute("categoryList",categoryList);
+        return "page/manager/editArticle";
+    }
+
+    /**
+     * 更新文章
+     *
+     * @param tArticleEX TArticleEX
+     * @return 视图
+     */
+    @RequestMapping("/updateArticle")
+    public String updateArticle(TArticleEX tArticleEX) {
+        articleService.updateArticle(tArticleEX);
+        return "redirect:/article/managerArticle";
+    }
+
+    /**
+     * 删除文章
+     *
+     * @param articleId 文章ID
+     * @return 视图
+     */
+    @RequestMapping("/deleteArticle")
+    public String deleteArticle(long articleId) {
+        articleService.deleteArticle(articleId);
+        return "redirect:/article/managerArticle";
     }
 
 

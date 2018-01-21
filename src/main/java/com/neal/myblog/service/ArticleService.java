@@ -23,4 +23,26 @@ public interface ArticleService {
      * @return List
      */
     List<TArticleVO> listArticleByManager();
+
+    /**
+     * 文章更新
+     *
+     * @param tArticleEX TArticleEX
+     */
+    void updateArticle(TArticleEX tArticleEX);
+
+    /**
+     * 删除文章操作
+     *
+     * @param id 文章ID
+     */
+    void deleteArticle(long id);
+
+    /**
+     * 根据ID获取文章
+     *
+     * @param id 文章ID
+     * @return TArticleVO
+     */
+    TArticleVO getArticleById(long id);
 }

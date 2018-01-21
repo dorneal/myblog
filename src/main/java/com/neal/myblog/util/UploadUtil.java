@@ -15,7 +15,7 @@ public class UploadUtil {
     }
 
     /**
-     * 图片上传，返回图片URL
+     * 图片上传到真实目录，返回图片URL
      *
      * @param file     byte[]
      * @param filePath String

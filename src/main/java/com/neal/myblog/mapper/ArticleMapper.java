@@ -21,7 +21,30 @@ public interface ArticleMapper {
 
     /**
      * 所有文章列表
+     *
      * @return List
      */
     List<TArticleVO> listArticleByManager();
+
+    /**
+     * 文章更新
+     *
+     * @param tArticleEX TArticleEX
+     */
+    void updateArticle(TArticleEX tArticleEX);
+
+    /**
+     * 删除文章操作
+     *
+     * @param articleId 文章ID
+     */
+    void deleteArticle(long articleId);
+
+    /**
+     * 根据ID获取文章
+     *
+     * @param articleId 文章ID
+     * @return TArticleVO
+     */
+    TArticleVO getArticleById(long articleId);
 }

@@ -34,21 +34,49 @@
         INSERT INTO t_article (article_title, article_time, article_content, article_tag, category_id)
         VALUES (#{articleTitle}, #{articleTime}, #{articleContent}, #{articleTag}, #{categoryId});
     </insert>
+    <update id="updateArticle" parameterType="com.neal.myblog.entity.TArticleEX">
+        UPDATE t_article a
+        SET a.article_title   = #{articleTitle},
+            a.article_time    = #{articleTime},
+            a.article_content = #{articleContent},
+            a.article_tag     = #{articleTag},
+            a.category_id     = #{categoryId}
+        WHERE
+            a.article_id = #{articleId}
+    </update>
+    <delete id="deleteArticle" parameterType="long">
+        DELETE FROM t_article
+        WHERE article_id = #{articleId}
+    </delete>
     <!--后台文章列表，不需要显示内容，需要查询出类别-->
     <select id="listArticleByManager" resultMap="articleVo">
         SELECT
-        a.article_id,
-        a.article_title,
-        a.article_time,
-        a.article_tag,
-        c.category_name
+            a.article_id,
+            a.article_title,
+            a.article_time,
+            a.article_tag,
+            c.category_name
         FROM
-        t_article a,
-        t_category c
+            t_article a,
+            t_category c
         WHERE
-        a.category_id = c.category_id
+            a.category_id = c.category_id
         ORDER BY
-        a.article_time DESC;
+            a.article_time DESC;
+    </select>
+    <select id="getArticleById" resultMap="articleVo" parameterType="long">
+        SELECT
+            a.article_id,
+            a.article_title,
+            a.article_time,
+            a.article_content,
+            a.article_tag,
+            c.category_name
+        FROM
+            t_article a,
+            t_category c
+        WHERE
+            a.category_id = c.category_id AND a.article_id = #{articleId}
     </select>
 
 </mapper>
