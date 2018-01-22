@@ -10,7 +10,10 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * 文章Service接口实现类
+ *
  * @author Neal
+ * @see com.neal.myblog.service.ArticleService
  */
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {

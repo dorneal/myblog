@@ -30,7 +30,6 @@ public class ManagerController {
     private CategoryService categoryService;
     @Resource
     private VisitService visitService;
-
     @Autowired
     Configuration configuration;
 

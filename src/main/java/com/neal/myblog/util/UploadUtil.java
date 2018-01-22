@@ -26,7 +26,9 @@ public class UploadUtil {
     public static String uploadImage(byte[] file, String filePath, String fileName) throws IOException {
         File targetFile = new File(filePath);
         if (!targetFile.exists()) {
-            targetFile.mkdirs();
+            if (targetFile.mkdirs()) {
+                System.out.println("图片上传================>目录已创建");
+            }
         }
         String name = filePath + "\\" + fileName;
         FileOutputStream out = new FileOutputStream(name);

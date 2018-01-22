@@ -34,7 +34,7 @@ public class Base64 {
      * @author 宋立君
      * @date 2014年07月03日
      */
-    public static String decode(String data) {
+    private static String decode(String data) {
         return new String(decode(data.toCharArray()));
     }
 
@@ -69,7 +69,7 @@ public class Base64 {
             val >>= 6;
             out[index + 1] = alphabet[val & 0x3F];
             val >>= 6;
-            out[index + 0] = alphabet[val & 0x3F];
+            out[index] = alphabet[val & 0x3F];
         }
         return out;
     }
@@ -82,7 +82,7 @@ public class Base64 {
      * @author 宋立君
      * @date 2014年07月03日
      */
-    public static byte[] decode(char[] data) {
+    private static byte[] decode(char[] data) {
 
         int tempLen = data.length;
         for (char aData : data) {
@@ -105,21 +105,21 @@ public class Base64 {
         }
         byte[] out = new byte[len];
 
-        int shift = 0; // # of excess bits stored in accum
-        int accum = 0; // excess bits
+        int shift = 0;
+        int accum = 0;
         int index = 0;
 
         // we now go through the entire array (NOT using the 'tempLen' value)
-        for (int ix = 0; ix < data.length; ix++) {
-            int value = (data[ix] > 255) ? -1 : codes[data[ix]];
+        for (char aData : data) {
+            int value = (aData > 255) ? -1 : codes[aData];
 
-            if (value >= 0) { // skip over non-code
-                accum <<= 6; // bits shift up by 6 each time thru
-                shift += 6; // loop, with new bits being put in
-                accum |= value; // at the bottom.
-                if (shift >= 8) { // whenever there are 8 or more shifted in,
-                    shift -= 8; // write them out (from the top, leaving any
-                    out[index++] = // excess at the bottom for next iteration.
+            if (value >= 0) {
+                accum <<= 6;
+                shift += 6;
+                accum |= value;
+                if (shift >= 8) {
+                    shift -= 8;
+                    out[index++] =
                             (byte) ((accum >> shift) & 0xff);
                 }
             }
@@ -151,52 +151,24 @@ public class Base64 {
         }
     }
 
-    /**
-     * 功能：解码文件。
-     *
-     * @param file 源文件
-     * @throws IOException IOException
-     * @author 宋立君
-     * @date 2014年07月03日
-     */
-    public static void decode(File file) throws IOException {
-        if (!file.exists()) {
-            System.exit(0);
-        } else {
-            char[] encoded = readChars(file);
-            byte[] decoded = decode(encoded);
-            writeBytes(file, decoded);
-        }
-    }
-
-    //
-    // code characters for values 0..63
-    //
     private static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
             .toCharArray();
 
-    //
-    // lookup table for converting base64 characters to value in range 0..63
-    //
     private static byte[] codes = new byte[256];
 
     static {
         for (int i = 0; i < 256; i++) {
             codes[i] = -1;
-            // LoggerUtil.debug(i + "&" + codes[i] + " ");
         }
         for (int i = 'A'; i <= 'Z'; i++) {
             codes[i] = (byte) (i - 'A');
-            // LoggerUtil.debug(i + "&" + codes[i] + " ");
         }
 
         for (int i = 'a'; i <= 'z'; i++) {
             codes[i] = (byte) (26 + i - 'a');
-            // LoggerUtil.debug(i + "&" + codes[i] + " ");
         }
         for (int i = '0'; i <= '9'; i++) {
             codes[i] = (byte) (52 + i - '0');
-            // LoggerUtil.debug(i + "&" + codes[i] + " ");
         }
         codes['+'] = 62;
         codes['/'] = 63;
@@ -235,61 +207,7 @@ public class Base64 {
 
         return b;
     }
-
-    private static char[] readChars(File file) throws IOException {
-        CharArrayWriter caw = new CharArrayWriter();
-        Reader fr = null;
-        Reader in = null;
-        try {
-            fr = new FileReader(file);
-            in = new BufferedReader(fr);
-            int count = 0;
-            char[] buf = new char[16384];
-            while ((count = in.read(buf)) != -1) {
-                if (count > 0) {
-                    caw.write(buf, 0, count);
-                }
-            }
-
-        } finally {
-            try {
-                caw.close();
-                if (in != null) {
-                    in.close();
-                }
-                if (fr != null) {
-                    fr.close();
-                }
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-        }
-
-        return caw.toCharArray();
-    }
-
-    private static void writeBytes(File file, byte[] data) throws IOException {
-        OutputStream fos = null;
-        OutputStream os = null;
-        try {
-            fos = new FileOutputStream(file);
-            os = new BufferedOutputStream(fos);
-            os.write(data);
-
-        } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-        }
-    }
-
+    
     private static void writeChars(File file, char[] data) throws IOException {
         Writer fos = null;
         Writer os = null;
@@ -310,17 +228,5 @@ public class Base64 {
                 e.printStackTrace();
             }
         }
-    }
-
-    // /////////////////////////////////////////////////
-    // end of test code.
-    // /////////////////////////////////////////////////
-    public static void main(String[] args) {
-        String s = "7758258a";
-        System.out.println("加密");
-        s = encode(encode(s));
-        System.out.println(s);
-        System.out.println("解密");
-        System.out.println(decode(decode(s)));
     }
 }

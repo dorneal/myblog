@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  * 类别service 实现类
  *
  * @author Neal
+ * @see com.neal.myblog.service.VisitService
  */
 @Service("visitService")
 public class VisitServiceImpl implements VisitService {

@@ -34,6 +34,7 @@
         INSERT INTO t_article (article_title, article_time, article_content, article_tag, category_id)
         VALUES (#{articleTitle}, #{articleTime}, #{articleContent}, #{articleTag}, #{categoryId});
     </insert>
+    <!--文章更新-->
     <update id="updateArticle" parameterType="com.neal.myblog.entity.TArticleEX">
         UPDATE t_article a
         SET a.article_title   = #{articleTitle},
@@ -44,6 +45,7 @@
         WHERE
             a.article_id = #{articleId}
     </update>
+    <!--文章硬删除-->
     <delete id="deleteArticle" parameterType="long">
         DELETE FROM t_article
         WHERE article_id = #{articleId}
@@ -64,6 +66,7 @@
         ORDER BY
             a.article_time DESC;
     </select>
+    <!--根据ID查找文章，用于更新页面-->
     <select id="getArticleById" resultMap="articleVo" parameterType="long">
         SELECT
             a.article_id,
@@ -78,5 +81,4 @@
         WHERE
             a.category_id = c.category_id AND a.article_id = #{articleId}
     </select>
-
 </mapper>
