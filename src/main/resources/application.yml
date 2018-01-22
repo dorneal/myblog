@@ -2,6 +2,8 @@
 mybatis:
   typeAliasesPackage: com.neal.myblog.entity
   mapperLocations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #开发配置
 spring:

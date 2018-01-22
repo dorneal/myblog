@@ -55,7 +55,7 @@ public class ArticleController {
         TArticleVO articleVO = articleService.getArticleById(articleId);
         List<TCategory> categoryList = categoryService.listCategory();
         modelMap.addAttribute("articleVO", articleVO);
-        modelMap.addAttribute("categoryList",categoryList);
+        modelMap.addAttribute("categoryList", categoryList);
         return "page/manager/editArticle";
     }
 

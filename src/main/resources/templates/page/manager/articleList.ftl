@@ -37,6 +37,8 @@
                     <th>是否原创</th>
                     <th>文章标题</th>
                     <th>类别</th>
+                    <th>浏览</th>
+                    <th>点赞</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -47,6 +49,8 @@
                     <td>${list.tArticleEX.articleTag}</td>
                     <td>${list.tArticleEX.articleTitle}</td>
                     <td>${list.tCategory.categoryName}</td>
+                    <td>${list.other.viewNum}</td>
+                    <td>${list.other.likeNum}</td>
                     <td>
                         <a href="/article/toUpdateArticlePage?articleId=${list.tArticleEX.articleId}">更新</a>
                         <a href="javascript:if(confirm('确实要删除吗?'))location='/article/deleteArticle?articleId=${list.tArticleEX.articleId}'">删除</a>

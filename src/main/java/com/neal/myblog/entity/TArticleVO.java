@@ -9,8 +9,15 @@ package com.neal.myblog.entity;
 public class TArticleVO {
     private TArticleEX tArticleEX;
     private TCategory tCategory;
-    private TView tView;
-    private TLike tLike;
+    private Other other;
+
+    public Other getOther() {
+        return other;
+    }
+
+    public void setOther(Other other) {
+        this.other = other;
+    }
 
     public TArticleEX gettArticleEX() {
         return tArticleEX;
@@ -26,21 +33,5 @@ public class TArticleVO {
 
     public void settCategory(TCategory tCategory) {
         this.tCategory = tCategory;
-    }
-
-    public TView gettView() {
-        return tView;
-    }
-
-    public void settView(TView tView) {
-        this.tView = tView;
-    }
-
-    public TLike gettLike() {
-        return tLike;
-    }
-
-    public void settLike(TLike tLike) {
-        this.tLike = tLike;
     }
 }

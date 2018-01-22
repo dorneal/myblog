@@ -16,17 +16,10 @@
             <id column="category_id" jdbcType="INTEGER" property="categoryId"/>
             <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
         </collection>
-        <!--点赞-->
-        <collection property="tLike" column="t_like" javaType="com.neal.myblog.entity.TLike">
-            <id column="like_id" jdbcType="INTEGER" property="likeId"/>
-            <result column="article_id" jdbcType="INTEGER" property="articleId"/>
-            <result column="visit_id" jdbcType="INTEGER" property="visitId"/>
-        </collection>
-        <!--浏览-->
-        <collection property="tView" column="t_view" javaType="com.neal.myblog.entity.TView">
-            <id column="view_id" jdbcType="INTEGER" property="viewId"/>
-            <result column="article_id" jdbcType="INTEGER" property="articleId"/>
-            <result column="visit_id" jdbcType="INTEGER" property="visitId"/>
+        <!--其他-->
+        <collection property="other" javaType="com.neal.myblog.entity.Other">
+            <result column="view_num" jdbcType="VARCHAR" property="viewNum"/>
+            <result column="like_num" jdbcType="VARCHAR" property="likeNum"/>
         </collection>
     </resultMap>
     <!--插入文章-->
@@ -53,18 +46,30 @@
     <!--后台文章列表，不需要显示内容，需要查询出类别-->
     <select id="listArticleByManager" resultMap="articleVo">
         SELECT
-            a.article_id,
-            a.article_title,
-            a.article_time,
-            a.article_tag,
-            c.category_name
+            t_article.article_id,
+            t_article.article_title,
+            t_article.article_time,
+            t_article.article_content,
+            t_article.article_tag,
+            t_category.category_name,
+            (SELECT count(view_id)
+             FROM
+                 t_view
+             WHERE
+                 t_view.article_id = t_article.article_id
+            ) AS view_num,
+            (SELECT count(like_id)
+             FROM
+                 t_like
+             WHERE
+                 t_like.article_id = t_article.article_id
+            ) AS like_num
         FROM
-            t_article a,
-            t_category c
-        WHERE
-            a.category_id = c.category_id
+            t_article
+            INNER JOIN
+            t_category ON (t_category.category_id = t_article.category_id)
         ORDER BY
-            a.article_time DESC;
+            article_time DESC
     </select>
     <!--根据ID查找文章，用于更新页面-->
     <select id="getArticleById" resultMap="articleVo" parameterType="long">
