@@ -13,9 +13,10 @@ public interface ArticleByVisitorService {
     /**
      * 分页查询所有，用于加载
      *
+     * @param currentPage 当前页
      * @return List
      */
-    List<TArticleVO> listArticleByVisit();
+    List<TArticleVO> listArticleByVisit(int currentPage);
 
     /**
      * 原创文章数

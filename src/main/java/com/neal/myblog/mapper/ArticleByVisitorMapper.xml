@@ -50,7 +50,7 @@
             t_category ON (t_category.category_id = t_article.category_id)
         ORDER BY
             article_time DESC
-        LIMIT #{currentPage}, 10
+        LIMIT #{currentPage}, 6
     </select>
     <!--查询原创文章数-->
     <select id="countArticleByOriginal" resultType="java.lang.Integer">

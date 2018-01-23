@@ -7,6 +7,7 @@ import com.neal.myblog.service.VisitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -58,17 +59,16 @@ public class PublicArticleController {
         return "page/index";
     }
 
-    @RequestMapping("/getArticleToVisitor")
+    @RequestMapping(value = "/getArticleToVisitor", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getArticleToVisitor(int currentPage) {
-        Map<String, Object> map = new HashMap<>(16);
-        List<TArticleVO> list = articleByVisitorService.listArticleByVisit();
+    public Map<String, Object> getArticleToVisitor(Integer currentPage) {
+        Map<String, Object> map = new HashMap<>(2);
+        List<TArticleVO> list = articleByVisitorService.listArticleByVisit(currentPage);
         if (list.size() != 0) {
             map.put("code", 1);
             map.put("data", list);
         } else {
             map.put("code", 0);
-            map.put("msg", "没有了！！！");
         }
         return map;
     }

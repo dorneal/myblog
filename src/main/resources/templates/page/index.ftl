@@ -48,106 +48,72 @@
         </div>
 
         <div id="all-article">
-            <div class="article">
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <script src="/js/jquery.min.js"></script>
-            <script>
-                //初始化
-                $(document).ready(getPage(0));
-                var $a = $("li.active").find("a[name=currentPage]").find("span#pageNum");
+        </div>
+        <script>
+            //初始化
+            $(document).ready(getPage(0));
+            // 请求
+            var currentPages = 0;
 
-                // 请求
-                function getPage(currentPage) {
-                    var $tbodyVisit = $("#tbodyVisit");
-                    $.post("/article/managerArticleByPage", {currentPage: currentPage}, function (data) {
-                        if (data.code === 1) {
-                            $tbodyVisit.empty();
-                            var s = "";
-                            for (var i in data.data) {
-                                s += "<tr><td>" + data.data[i].tArticleEX.articleId + "</td><td>" + data.data[i].tArticleEX.articleTitle + "</td><td>" + format(data.data[i].tArticleEX.articleTime) + "</td><td>" + data.data[i].tArticleEX.articleTag + "</td><td>" + data.data[i].tCategory.categoryName + "</td><td>" + data.data[i].other.viewNum + "</td><td>" + data.data[i].other.likeNum + "</td><td>" +
-                                        "<a href=/article/toUpdateArticlePage?articleId=" + data.data[i].tArticleEX.articleId + ">更新</a> <a href=javascript:if(confirm('确实要删除吗?'))location='/article/deleteArticle?articleId=" + data.data[i].tArticleEX.articleId + ">删除</a>" + "</td></tr>";
-                            }
-                            $tbodyVisit.html(s);
-                            $a.text(currentPage);
-                        } else if (data.code === 0) {
-                            $('ul.pagination li:last').addClass('disabled');
-                        } else {
-                            alert("未知错误！！！");
+            function getPage(currentPage) {
+                $.post("/index/getArticleToVisitor", {currentPage: currentPage}, function (data) {
+                    currentPages++;
+                    if (data.code === 1) {
+                        var s = "";
+                        for (var i in data.data) {
+                            s += "<div class=\"article\">\n" +
+                                    "                <div class=\"article-content-introduction\">\n" +
+                                    "                    <div class=\"article-title-link\">\n" +
+                                    "                        <h3><a href=\"\" title=\"\">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"article-content\">\n" +
+                                    "                        <p>" + data.data[i].tArticleEX.articleContent + "</p>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"date-author-info\">\n" +
+                                    "                        <p>\n" +
+                                    "                            <span class=\"icon-quill\"></span> <span style=\"margin-right: 10px\">" + data.data[i].tArticleEX.articleTag + "</span>\n" +
+                                    "                            <span class=\"icon-clock\"></span> <span style=\"margin-right: 10px\">" + format(data.data[i].tArticleEX.articleTime) + "</span>\n" +
+                                    "                            <span class=\"icon-eye\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.viewNum + "</span>\n" +
+                                    "                            <span class=\"icon-heart\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.likeNum + "</span>\n" +
+                                    "                        </p>\n" +
+                                    "                    </div>\n" +
+                                    "                </div>\n" +
+                                    "            </div>";
                         }
-                    }, "json")
-                }
-
-                function add0(m) {
-                    return m < 10 ? '0' + m : m
-                }
-
-                function format(timestrip) {
-                    //timestrip是整数，否则要parseInt转换
-                    var time = new Date(timestrip);
-                    var y = time.getFullYear();
-                    var m = time.getMonth() + 1;
-                    var d = time.getDate();
-                    var h = time.getHours();
-                    var mm = time.getMinutes();
-                    var s = time.getSeconds();
-                    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
-                }
-
-                // 上一页
-                function getPrePage() {
-                    if (parseInt($a.text()) > 0) {
-                        getPage((parseInt($a.text()) - 1));
+                        document.getElementById("all-article").innerHTML = s;
+                    } else if (data.code === 0) {
+                        $('div#content_bottom').find('h3').empty().text("没有了");
                     } else {
-                        $('ul.pagination li:first').addClass('disabled');
+                        alert("未知错误！！！");
                     }
-                }
+                }, "json")
+            }
 
-                // 下一页
-                function getNextPage() {
-                    getPage((parseInt($a.text()) + 1));
-                }
-            </script>
+            function add0(m) {
+                return m < 10 ? '0' + m : m
+            }
+
+            function format(timestrip) {
+                //timestrip是整数，否则要parseInt转换
+                var time = new Date(timestrip);
+                var y = time.getFullYear();
+                var m = time.getMonth() + 1;
+                var d = time.getDate();
+                var h = time.getHours();
+                var mm = time.getMinutes();
+                var s = time.getSeconds();
+                return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+            }
+        </script>
+
+        <div id="content_bottom">
+            <h3 style="text-align: center;"><a id="loadingMore" style="cursor: pointer;">加载更多</a></h3>
         </div>
 
         <script type="text/javascript">
-            //获取列表中的原有内容
-            var content = document.getElementById("all-article").innerHTML;
-
-            //每被调用一次，就将网页原有内容添加一份，这个大家可以写自己要加载的内容或指令
-            function addLi() {
-                document.getElementById("all-article").innerHTML += content;
-            }
-
-            /*
-             * 监听滚动条，本来不想用jQuery但是发现js里面监听滚动条的事件不好添加，这边就引用了Jquery的$(obj).scroll();这个方法了
-             */
-            $(window).scroll(function () {
-                //下面这句主要是获取网页的总高度，主要是考虑兼容性所以把Ie支持的documentElement也写了，这个方法至少支持IE8
-                var htmlHeight = document.body.scrollHeight || document.documentElement.scrollHeight;
-                //clientHeight是网页在浏览器中的可视高度，
-                var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
-                //scrollTop是浏览器滚动条的top位置，
-                var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-                //通过判断滚动条的top位置与可视网页之和与整个网页的高度是否相等来决定是否加载内容；
-                if (scrollTop + clientHeight === htmlHeight) {
-                    addLi();
-                }
-            })
+            $("a#loadingMore").click(function () {
+                getPage(currentPages);
+            });
         </script>
     </div>
     <!-- end content -->
@@ -164,7 +130,7 @@
                 <ul>
                     <li><span class="icon-fire"></span> 来访数：<span>${visitCount!}</span></li>
                     <li><span class="icon-books"></span> 总文章：<span>${articleCount!}</span></li>
-                    <li><span class="icon-books"></span> 原创数：<span>${originalArticleCount!}</span></li>
+                    <li><span class="icon-quill"></span> 原创数：<span>${originalArticleCount!}</span></li>
                     <li><span class="icon-heart"></span> 点赞数：<span>${likeCount!}</span></li>
                 </ul>
             </div>

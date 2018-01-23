@@ -19,9 +19,10 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     @Resource
     private ArticleByVisitorMapper articleByVisitorMapper;
 
+
     @Override
-    public List<TArticleVO> listArticleByVisit() {
-        return articleByVisitorMapper.listArticleByVisit();
+    public List<TArticleVO> listArticleByVisit(int currentPage) {
+        return articleByVisitorMapper.listArticleByVisit(currentPage * 6);
     }
 
     @Override
