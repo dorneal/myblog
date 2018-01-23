@@ -26,4 +26,9 @@ public class VisitServiceImpl implements VisitService {
         Pageable pageable = new PageRequest(page, size);
         return visitRepository.findAll(pageable);
     }
+
+    @Override
+    public int countVisit() {
+        return visitRepository.countVisit();
+    }
 }

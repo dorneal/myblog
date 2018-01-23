@@ -19,4 +19,11 @@ public interface VisitService {
      * @return Page
      */
     Page<TVisit> findByPagination(Integer page, Integer size);
+
+    /**
+     * 查询来访数
+     *
+     * @return int
+     */
+    int countVisit();
 }

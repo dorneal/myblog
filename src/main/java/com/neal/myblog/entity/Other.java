@@ -3,6 +3,15 @@ package com.neal.myblog.entity;
 public class Other {
     private Long viewNum;
     private Long likeNum;
+    private Long articleNum;
+
+    public Long getArticleNum() {
+        return articleNum;
+    }
+
+    public void setArticleNum(Long articleNum) {
+        this.articleNum = articleNum;
+    }
 
     public Long getViewNum() {
         return viewNum;

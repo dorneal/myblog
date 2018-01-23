@@ -7,7 +7,7 @@ import com.neal.myblog.entity.TArticleVO;
 import java.util.List;
 
 /**
- * 文章Mapper
+ * 文章Mapper，用于博主
  *
  * @author Neal
  */

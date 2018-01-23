@@ -22,7 +22,7 @@
 <body>
 <!-- header -->
 <div id="header">
-    <iframe src="./rain.html"></iframe>
+    <iframe src="/css/rain.html"></iframe>
 </div>
 <!-- end header -->
 
@@ -49,9 +49,6 @@
 
         <div id="all-article">
             <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="/images/2017.jpeg" alt=""></a>
-                </div>
                 <div class="article-content-introduction">
                     <div class="article-title-link">
                         <h3><a href="" title="">回首2017</a></h3>
@@ -68,111 +65,63 @@
                     </div>
                 </div>
             </div>
+            <script src="/js/jquery.min.js"></script>
+            <script>
+                //初始化
+                $(document).ready(getPage(0));
+                var $a = $("li.active").find("a[name=currentPage]").find("span#pageNum");
 
-            <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="/images/2017.jpeg" alt=""></a>
-                </div>
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                // 请求
+                function getPage(currentPage) {
+                    var $tbodyVisit = $("#tbodyVisit");
+                    $.post("/article/managerArticleByPage", {currentPage: currentPage}, function (data) {
+                        if (data.code === 1) {
+                            $tbodyVisit.empty();
+                            var s = "";
+                            for (var i in data.data) {
+                                s += "<tr><td>" + data.data[i].tArticleEX.articleId + "</td><td>" + data.data[i].tArticleEX.articleTitle + "</td><td>" + format(data.data[i].tArticleEX.articleTime) + "</td><td>" + data.data[i].tArticleEX.articleTag + "</td><td>" + data.data[i].tCategory.categoryName + "</td><td>" + data.data[i].other.viewNum + "</td><td>" + data.data[i].other.likeNum + "</td><td>" +
+                                        "<a href=/article/toUpdateArticlePage?articleId=" + data.data[i].tArticleEX.articleId + ">更新</a> <a href=javascript:if(confirm('确实要删除吗?'))location='/article/deleteArticle?articleId=" + data.data[i].tArticleEX.articleId + ">删除</a>" + "</td></tr>";
+                            }
+                            $tbodyVisit.html(s);
+                            $a.text(currentPage);
+                        } else if (data.code === 0) {
+                            $('ul.pagination li:last').addClass('disabled');
+                        } else {
+                            alert("未知错误！！！");
+                        }
+                    }, "json")
+                }
 
-            <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="/images/2017.jpeg" alt=""></a>
-                </div>
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                function add0(m) {
+                    return m < 10 ? '0' + m : m
+                }
 
-            <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="../../static/images/2017.jpeg" alt=""></a>
-                </div>
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                function format(timestrip) {
+                    //timestrip是整数，否则要parseInt转换
+                    var time = new Date(timestrip);
+                    var y = time.getFullYear();
+                    var m = time.getMonth() + 1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+                }
 
-            <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="../../static/images/2017.jpeg" alt=""></a>
-                </div>
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                // 上一页
+                function getPrePage() {
+                    if (parseInt($a.text()) > 0) {
+                        getPage((parseInt($a.text()) - 1));
+                    } else {
+                        $('ul.pagination li:first').addClass('disabled');
+                    }
+                }
 
-            <div class="article">
-                <div class="artilce-img-info">
-                    <a href="" title=""><img src="../../static/images/2017.jpeg" alt=""></a>
-                </div>
-                <div class="article-content-introduction">
-                    <div class="article-title-link">
-                        <h3><a href="" title="">回首2017</a></h3>
-                    </div>
-                    <div class="article-content">
-                        <p>生活的方向，不能曲折，梦想的指引，不能迷茫，岁月的流逝，不能阻挡，未来的天空，不缺希望，2017的经历，总结新生的力量，迎接2018的光芒，愿成功伴你飞扬。</p>
-                    </div>
-                    <div class="date-author-info">
-                        <p>
-                            <span class="icon-clock"></span> <span style="margin-right: 10px">2018.01.02 16:05:42</span>
-                            <span class="icon-eye"></span> <span style="margin-right: 10px">256</span>
-                            <span class="icon-bubble2"></span> <span style="margin-right: 10px">3</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+                // 下一页
+                function getNextPage() {
+                    getPage((parseInt($a.text()) + 1));
+                }
+            </script>
         </div>
 
         <script type="text/javascript">
@@ -207,49 +156,37 @@
     <div id="aside">
         <div class="aside-info">
             <div class="aventar">
-                <img src="../../static/images/my.JPG" alt="我的头像">
+                <img src="/images/my.JPG" alt="我的头像">
                 <h3>黑天白夜</h3>
                 <p>你懂的越多，懂你的就越少！</p>
             </div>
             <div class="rank-count">
                 <ul>
-                    <li><span class="icon-books"></span> 原创：<span>23</span></li>
-                    <li><span class="icon-fire"></span> 来访：<span>10658</span></li>
-                    <li><span class="icon-heart"></span> 有用：<span>106</span></li>
-                    <li><span class="icon-heart-broken"> 无用：</span><span>2</span></li>
-                    <li><span class="icon-bubble"></span> 评论：<span>21</span></li>
+                    <li><span class="icon-fire"></span> 来访数：<span>${visitCount!}</span></li>
+                    <li><span class="icon-books"></span> 总文章：<span>${articleCount!}</span></li>
+                    <li><span class="icon-books"></span> 原创数：<span>${originalArticleCount!}</span></li>
+                    <li><span class="icon-heart"></span> 点赞数：<span>${likeCount!}</span></li>
                 </ul>
             </div>
         </div>
         <div class="aside-rank">
             <h3>阅读排行</h3>
             <ul>
-                <li><span class="li-span"><span class="icon-price-tags"></span> <span>3354</span></span> <a href=""
-                                                                                                            title="">人手一份核武器：Android手机装Kali
-                    Linux</a></li>
-                <li><span class="li-span"><span class="icon-price-tags"></span> <span>3354</span></span> <a href=""
-                                                                                                            title="">人手一份核武器：Android手机装Kali
-                    Linux</a></li>
-                <li><span class="li-span"><span class="icon-price-tags"></span> <span>3354</span></span> <a href=""
-                                                                                                            title="">人手一份核武器：Android手机装Kali
-                    Linux</a></li>
-                <li><span class="li-span"><span class="icon-price-tags"></span> <span>3354</span></span> <a href=""
-                                                                                                            title="">人手一份核武器：Android手机装Kali
-                    Linux</a></li>
-                <li><span class="li-span"><span class="icon-price-tags"></span> <span>3354</span></span> <a href=""
-                                                                                                            title="">人手一份核武器：Android手机装Kali
-                    Linux</a></li>
+                <#list rankArticle as listRank>
+                    <li><span class="li-span"><span
+                            class="icon-price-tags"></span> <span>${listRank.other.viewNum}</span></span> <a
+                            href="${listRank.tArticleEX.articleId}"
+                            title="${listRank.tArticleEX.articleTitle}">${listRank.tArticleEX.articleTitle}</a></li>
+                </#list>
             </ul>
         </div>
         <div class="aside-category">
             <h3>文章分类</h3>
             <ul>
-                <li><a href="" title="">编程语言</a> <span class="icon-bookmarks"></span> <span>23</span></li>
-                <li><a href="" title="">框架技术</a> <span class="icon-bookmarks"></span> <span>10</span></li>
-                <li><a href="" title="">数据库</a> <span class="icon-bookmarks"></span> <span>12</span></li>
-                <li><a href="" title="">数据结构、算法</a> <span class="icon-bookmarks"></span> <span>12</span></li>
-                <li><a href="" title="">环境搭建</a> <span class="icon-bookmarks"></span> <span>6</span></li>
-                <li><a href="" title="">其它杂类</a> <span class="icon-bookmarks"></span> <span>20</span></li>
+                <#list categoryNumByArticle as categoryList>
+                    <li><a href="" title="">${categoryList.tCategory.categoryName}</a> <span
+                            class="icon-bookmarks"></span> <span>${categoryList.other.articleNum}</span></li>
+                </#list>
             </ul>
         </div>
         <div class="aside-suggest">

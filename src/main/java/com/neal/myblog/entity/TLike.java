@@ -1,15 +1,22 @@
 package com.neal.myblog.entity;
 
 
+import javax.persistence.*;
+
 /**
  * 点赞实体类
  *
  * @author neal
  */
+@Entity
+@Table(name = "t_like")
 public class TLike {
-
+    @Id
+    @GeneratedValue
     private long likeId;
+    @Column(nullable = false, name = "article_id")
     private long articleId;
+    @Column(nullable = false, name = "visit_id")
     private long visitId;
 
 
