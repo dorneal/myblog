@@ -54,8 +54,10 @@
                             }
                             $tbodyVisit.html(s);
                             $a.text(page);
+                        } else if (data.code === 0) {
+                            $('ul.pagination li:last').addClass('disabled');
                         } else {
-                            alert(data.msg);
+                            alert("未知错误！！！")
                         }
                     }, "json")
                 }
@@ -65,7 +67,7 @@
                     if (parseInt($a.text()) > 0) {
                         getPage((parseInt($a.text()) - 1), 10);
                     } else {
-                        getPage(0, 10);
+                        $('ul.pagination li:first').addClass('disabled');
                     }
                 }
 

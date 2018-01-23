@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文章Service接口实现类
@@ -27,8 +26,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<TArticleVO> listArticleByManager() {
-        return articleMapper.listArticleByManager();
+    public List<TArticleVO> listArticleByManagerToPage(int currentPage) {
+        // 分页*页面大小=第二页（默认语句页面大小为10条记录）
+        return articleMapper.listArticleByManagerToPage(currentPage * 10);
     }
 
     @Override

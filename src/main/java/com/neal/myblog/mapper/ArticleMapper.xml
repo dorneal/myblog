@@ -43,13 +43,27 @@
         DELETE FROM t_article
         WHERE article_id = #{articleId}
     </delete>
-    <!--后台文章列表，不需要显示内容，需要查询出类别-->
-    <select id="listArticleByManager" resultMap="articleVo">
+    <!--根据ID查找文章，用于更新页面-->
+    <select id="getArticleById" resultMap="articleVo" parameterType="long">
+        SELECT
+            a.article_id,
+            a.article_title,
+            a.article_time,
+            a.article_content,
+            a.article_tag,
+            c.category_name
+        FROM
+            t_article a,
+            t_category c
+        WHERE
+            a.category_id = c.category_id AND a.article_id = #{articleId}
+    </select>
+    <!--分页查询文章-->
+    <select id="listArticleByManagerToPage" resultMap="articleVo" parameterType="int">
         SELECT
             t_article.article_id,
             t_article.article_title,
             t_article.article_time,
-            t_article.article_content,
             t_article.article_tag,
             t_category.category_name,
             (SELECT count(view_id)
@@ -70,20 +84,6 @@
             t_category ON (t_category.category_id = t_article.category_id)
         ORDER BY
             article_time DESC
-    </select>
-    <!--根据ID查找文章，用于更新页面-->
-    <select id="getArticleById" resultMap="articleVo" parameterType="long">
-        SELECT
-            a.article_id,
-            a.article_title,
-            a.article_time,
-            a.article_content,
-            a.article_tag,
-            c.category_name
-        FROM
-            t_article a,
-            t_category c
-        WHERE
-            a.category_id = c.category_id AND a.article_id = #{articleId}
+        LIMIT #{currentPage}, 10
     </select>
 </mapper>

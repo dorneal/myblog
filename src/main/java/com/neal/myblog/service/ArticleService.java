@@ -19,11 +19,12 @@ public interface ArticleService {
     void saveArticle(TArticleEX tArticleEX);
 
     /**
-     * 所有文章列表
+     * 分页查询，所有文章列表（默认一页量为10条记录）
      *
+     * @param currentPage 当前页
      * @return List
      */
-    List<TArticleVO> listArticleByManager();
+    List<TArticleVO> listArticleByManagerToPage(int currentPage);
 
     /**
      * 文章更新

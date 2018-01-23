@@ -32,15 +32,32 @@ public class ArticleController {
     private ArticleService articleService;
 
     /**
-     * 查询数据，返回文章管理页面
+     * 文章后台管理页面
      *
      * @return 视图
      */
-    @RequestMapping("/managerArticle")
-    public String managerArticle(ModelMap modelMap) {
-        List<TArticleVO> list = articleService.listArticleByManager();
-        modelMap.addAttribute("articleList", list);
+    @RequestMapping("/managerArticlePage")
+    public String managerArticlePage() {
         return "page/manager/articleList";
+    }
+
+    /**
+     * 查询数据，返回文章管理页面
+     *
+     * @return json
+     */
+    @RequestMapping(value = "/managerArticleByPage", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> managerArticleByPage(Integer currentPage) {
+        List<TArticleVO> list = articleService.listArticleByManagerToPage(currentPage);
+        Map<String, Object> map = new HashMap<>(2);
+        if (list.size() == 0) {
+            map.put("code", 0);
+        } else {
+            map.put("code", 1);
+            map.put("data", list);
+        }
+        return map;
     }
 
     /**
@@ -68,7 +85,7 @@ public class ArticleController {
     @RequestMapping("/updateArticle")
     public String updateArticle(TArticleEX tArticleEX) {
         articleService.updateArticle(tArticleEX);
-        return "redirect:/article/managerArticle";
+        return "redirect:/article/managerArticlePage";
     }
 
     /**
@@ -80,7 +97,7 @@ public class ArticleController {
     @RequestMapping("/deleteArticle")
     public String deleteArticle(long articleId) {
         articleService.deleteArticle(articleId);
-        return "redirect:/article/managerArticle";
+        return "redirect:/article/managerArticlePage";
     }
 
 
@@ -106,7 +123,7 @@ public class ArticleController {
     @RequestMapping(value = "/publishArticle", method = RequestMethod.POST)
     public String publishArticle(TArticleEX tArticleEX) {
         articleService.saveArticle(tArticleEX);
-        return "redirect:/article/managerArticle";
+        return "redirect:/article/managerArticlePage";
     }
 
     /**

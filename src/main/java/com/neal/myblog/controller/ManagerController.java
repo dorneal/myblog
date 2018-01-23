@@ -56,12 +56,11 @@ public class ManagerController {
     @RequestMapping(value = "/managerVisit", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> managerVisit(Integer page, Integer size) {
-        Map<String, Object> map = new HashMap<>(3);
+        Map<String, Object> map = new HashMap<>(2);
         Page<TVisit> page1 = visitService.findByPagination(page, size);
         List<TVisit> list = page1.getContent();
         if (list.size() == 0) {
             map.put("code", 0);
-            map.put("msg", "没有了!!!");
         } else {
             map.put("code", 1);
             map.put("data", list);

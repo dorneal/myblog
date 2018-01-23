@@ -43,7 +43,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(TUser user, HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>(3);
+        Map<String, Object> map = new HashMap<>(2);
         TUser tUser = userService.login(user);
         if (tUser != null) {
             // 往session中放入用户

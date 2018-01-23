@@ -5,7 +5,6 @@ import com.neal.myblog.entity.TArticleEX;
 import com.neal.myblog.entity.TArticleVO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文章Mapper
@@ -21,11 +20,12 @@ public interface ArticleMapper {
     void saveArticle(TArticleEX tArticleEX);
 
     /**
-     * 所有文章列表
+     * 分页查询，所有文章列表（默认一页量为10条记录）
      *
-     * @return List
+     * @param currentPage 当前页
+     * @return PageBean
      */
-    List<TArticleVO> listArticleByManager();
+    List<TArticleVO> listArticleByManagerToPage(int currentPage);
 
     /**
      * 文章更新
