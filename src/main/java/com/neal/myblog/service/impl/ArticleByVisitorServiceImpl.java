@@ -1,5 +1,6 @@
 package com.neal.myblog.service.impl;
 
+import com.neal.myblog.entity.TArticleEX;
 import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.mapper.ArticleByVisitorMapper;
 import com.neal.myblog.service.ArticleByVisitorService;
@@ -48,5 +49,10 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     @Override
     public TArticleVO getArticleById(int articleId) {
         return articleByVisitorMapper.getArticleById(articleId);
+    }
+
+    @Override
+    public TArticleEX getArticlePreAndNext(int articleId) {
+        return articleByVisitorMapper.getArticlePreAndNext(articleId);
     }
 }

@@ -1,5 +1,6 @@
 package com.neal.myblog.mapper;
 
+import com.neal.myblog.entity.TArticleEX;
 import com.neal.myblog.entity.TArticleVO;
 
 import java.util.List;
@@ -54,4 +55,12 @@ public interface ArticleByVisitorMapper {
      * @return 包装类
      */
     TArticleVO getArticleById(int articleId);
+
+    /**
+     * 用于查询上下页文章ID,以及文章标题
+     *
+     * @param articleId 文章ID
+     * @return TArticleEX
+     */
+    TArticleEX getArticlePreAndNext(int articleId);
 }

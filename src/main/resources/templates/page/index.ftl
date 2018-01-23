@@ -125,7 +125,7 @@
                 <#list rankArticle as listRank>
                     <li><span class="li-span"><span
                             class="icon-price-tags"></span> <span>${listRank.other.viewNum}</span></span> <a
-                            href="${listRank.tArticleEX.articleId}"
+                            href="/public/readArticle?articleId=${listRank.tArticleEX.articleId}"
                             title="${listRank.tArticleEX.articleTitle}">${listRank.tArticleEX.articleTitle}</a></li>
                 </#list>
             </ul>

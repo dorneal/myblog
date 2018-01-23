@@ -1,5 +1,6 @@
 package com.neal.myblog.controller;
 
+import com.neal.myblog.entity.TArticleEX;
 import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.service.ArticleByVisitorService;
 import com.neal.myblog.service.LikeService;
@@ -65,7 +66,11 @@ public class PublicArticleController {
     @RequestMapping("/readArticle")
     public String readArticle(Integer articleId, ModelMap modelMap) {
         TArticleVO articleVO = articleByVisitorService.getArticleById(articleId);
+        TArticleEX tArticleEX = articleByVisitorService.getArticlePreAndNext(articleId - 1);
+        TArticleEX tArticleEX2 = articleByVisitorService.getArticlePreAndNext(articleId + 1);
         modelMap.addAttribute("articleVo", articleVO);
+        modelMap.addAttribute("tArticleEX", tArticleEX);
+        modelMap.addAttribute("tArticleEX2", tArticleEX2);
         asideContent(modelMap);
         return "page/read";
     }

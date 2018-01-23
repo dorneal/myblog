@@ -23,6 +23,14 @@
             <result column="article_num" jdbcType="VARCHAR" property="articleNum"/>
         </collection>
     </resultMap>
+    <resultMap id="articleEx" type="com.neal.myblog.entity.TArticleEX">
+        <id column="article_id" jdbcType="INTEGER" property="articleId"/>
+        <result column="article_title" jdbcType="VARCHAR" property="articleTitle"/>
+        <result column="article_time" jdbcType="TIMESTAMP" property="articleTime"/>
+        <result column="article_content" jdbcType="VARCHAR" property="articleContent"/>
+        <result column="article_tag" jdbcType="VARCHAR" property="articleTag"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+    </resultMap>
     <!--用于首页显示-->
     <select id="listArticleByVisit" resultMap="articleVo" parameterType="int">
         SELECT
@@ -123,5 +131,13 @@
             t_category ON (t_category.category_id = t_article.category_id)
         WHERE
             article_id = #{articleId};
+    </select>
+    <!--用于查询上下页文章ID,以及文章标题-->
+    <select id="getArticlePreAndNext" resultMap="articleEx" parameterType="int">
+        SELECT
+            t_article.article_id,
+            t_article.article_title
+        FROM t_article
+        WHERE article_id = #{articleId}
     </select>
 </mapper>

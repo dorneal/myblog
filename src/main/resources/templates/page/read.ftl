@@ -11,7 +11,7 @@
     <meta name="language" content="java"/>
     <meta name="designer" content="neal,nealblog"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>NealBlog</title>
+    <title>${articleVo.tArticleEX.articleTitle}</title>
     <link rel="shortcut icon" href="/images/icon/icon.ico">
     <link rel="stylesheet" href="/css/iconmoon.css">
     <link rel="stylesheet" href="/css/myStyle.css">
@@ -33,6 +33,7 @@
                 <span class="span-right"><span class="icon-heart"></span> <span>${articleVo.other.likeNum}</span></span>
             </div>
         </div>
+        <input type="hidden" value="${articleVo.tArticleEX.articleId}">
         <div class="article-content-info">
         ${articleVo.tArticleEX.articleContent}
         </div>
@@ -40,8 +41,18 @@
             <button type="button"><span class="icon-smile"></span></button>
         </div>
         <div class="pageContext">
-            <a href="" title=""><span>回首2016</span></a>
-            <a href="" title=""><span>我的2018</span></a>
+            <#if (tArticleEX.articleId)??>
+                <a href="/public/readArticle?articleId=${tArticleEX.articleId}"
+                   title="${tArticleEX.articleTitle}"><span>${tArticleEX.articleTitle}</span></a>
+            <#else>
+                <a href="#" title="没有了"><span>没有了</span></a>
+            </#if>
+            <#if (tArticleEX2.articleId)??>
+                <a href="/public/readArticle?articleId=${tArticleEX2.articleId}"
+                   title="${tArticleEX2.articleTitle}"><span>${tArticleEX2.articleTitle}</span></a>
+            <#else>
+                <a href="#" title="没有了"><span>没有了</span></a>
+            </#if>
         </div>
         <div id="conmment">
             <h3>留下你的脚印</h3>
@@ -88,7 +99,7 @@
                 <#list rankArticle as listRank>
                     <li><span class="li-span"><span
                             class="icon-price-tags"></span> <span>${listRank.other.viewNum}</span></span> <a
-                            href="${listRank.tArticleEX.articleId}"
+                            href="/public/readArticle?articleId=${listRank.tArticleEX.articleId}"
                             title="${listRank.tArticleEX.articleTitle}">${listRank.tArticleEX.articleTitle}</a></li>
                 </#list>
             </ul>
