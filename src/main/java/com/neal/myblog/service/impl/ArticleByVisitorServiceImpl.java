@@ -44,4 +44,9 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     public List<TArticleVO> categoryNumByArticle() {
         return articleByVisitorMapper.categoryNumByArticle();
     }
+
+    @Override
+    public TArticleVO getArticleById(int articleId) {
+        return articleByVisitorMapper.getArticleById(articleId);
+    }
 }

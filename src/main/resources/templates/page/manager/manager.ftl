@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/manager.css">
 </head>
 <body>
-<#include "./aside.ftl">
+<#include "managerAside.ftl">
 
 <div class="container">
     <div class="panel panel-default">

@@ -4,8 +4,6 @@ import com.neal.myblog.entity.TCategory;
 import com.neal.myblog.entity.TVisit;
 import com.neal.myblog.service.CategoryService;
 import com.neal.myblog.service.VisitService;
-import freemarker.template.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,8 +28,6 @@ public class ManagerController {
     private CategoryService categoryService;
     @Resource
     private VisitService visitService;
-    @Autowired
-    Configuration configuration;
 
     /**
      * 返回管理页

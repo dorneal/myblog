@@ -49,6 +49,7 @@
 
         <div id="all-article">
         </div>
+        <script src="/js/timestampConversion.js"></script>
         <script>
             //初始化
             $(document).ready(getPage(0));
@@ -56,7 +57,7 @@
             var currentPages = 0;
 
             function getPage(currentPage) {
-                $.post("/index/getArticleToVisitor", {currentPage: currentPage}, function (data) {
+                $.post("/public/getArticleToVisitor", {currentPage: currentPage}, function (data) {
                     currentPages++;
                     if (data.code === 1) {
                         var s = "";
@@ -64,7 +65,7 @@
                             s += "<div class=\"article\">\n" +
                                     "                <div class=\"article-content-introduction\">\n" +
                                     "                    <div class=\"article-title-link\">\n" +
-                                    "                        <h3><a href=\"\" title=\"\">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
+                                    "                        <h3><a href=/public/readArticle?articleId=" + data.data[i].tArticleEX.articleId + " title=" + data.data[i].tArticleEX.articleTitle + ">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
                                     "                    </div>\n" +
                                     "                    <div class=\"article-content\">\n" +
                                     "                        <p>" + data.data[i].tArticleEX.articleContent + "</p>\n" +
@@ -88,24 +89,7 @@
                     }
                 }, "json")
             }
-
-            function add0(m) {
-                return m < 10 ? '0' + m : m
-            }
-
-            function format(timestrip) {
-                //timestrip是整数，否则要parseInt转换
-                var time = new Date(timestrip);
-                var y = time.getFullYear();
-                var m = time.getMonth() + 1;
-                var d = time.getDate();
-                var h = time.getHours();
-                var mm = time.getMinutes();
-                var s = time.getSeconds();
-                return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
-            }
         </script>
-
         <div id="content_bottom">
             <h3 style="text-align: center;"><a id="loadingMore" style="cursor: pointer;">加载更多</a></h3>
         </div>

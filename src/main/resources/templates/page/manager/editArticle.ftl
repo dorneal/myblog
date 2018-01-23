@@ -11,7 +11,7 @@
     <script src="/js/xss.js"></script>
 </head>
 <body>
-<#include "./aside.ftl">
+<#include "managerAside.ftl">
 
 <div class="container">
     <div class="panel panel-default">

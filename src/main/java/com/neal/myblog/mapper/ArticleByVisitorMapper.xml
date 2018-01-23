@@ -24,7 +24,7 @@
         </collection>
     </resultMap>
     <!--用于首页显示-->
-    <select id="listArticleByVisit" resultMap="articleVo">
+    <select id="listArticleByVisit" resultMap="articleVo" parameterType="int">
         SELECT
             t_article.article_id,
             t_article.article_title,
@@ -96,5 +96,32 @@
             t_category
         ORDER BY
             category_id;
+    </select>
+    <select id="getArticleById" resultMap="articleVo" parameterType="int">
+        SELECT
+            t_article.article_id,
+            t_article.article_title,
+            t_article.article_time,
+            t_article.article_content,
+            t_article.article_tag,
+            t_category.category_name,
+            (SELECT count(view_id)
+             FROM
+                 t_view
+             WHERE
+                 t_view.article_id = t_article.article_id
+            ) AS view_num,
+            (SELECT count(like_id)
+             FROM
+                 t_like
+             WHERE
+                 t_like.article_id = t_article.article_id
+            ) AS like_num
+        FROM
+            t_article
+            INNER JOIN
+            t_category ON (t_category.category_id = t_article.category_id)
+        WHERE
+            article_id = #{articleId};
     </select>
 </mapper>

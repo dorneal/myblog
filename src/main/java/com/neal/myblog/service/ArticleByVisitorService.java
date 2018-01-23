@@ -45,4 +45,12 @@ public interface ArticleByVisitorService {
      * @return List
      */
     List<TArticleVO> categoryNumByArticle();
+
+    /**
+     * 查询显示文章
+     *
+     * @param articleId 文章ID
+     * @return 包装类
+     */
+    TArticleVO getArticleById(int articleId);
 }

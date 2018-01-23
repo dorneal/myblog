@@ -10,7 +10,7 @@
 </head>
 <body>
 <!-- 侧边栏 -->
-<#include "./aside.ftl">
+<#include "managerAside.ftl">
 
 <!-- 主体 -->
 <div class="container">
@@ -52,6 +52,7 @@
                 <li><a onclick="getNextPage()">»</a></li>
             </ul>
             <script src="/js/jquery.min.js"></script>
+            <script src="/js/timestampConversion.js"></script>
             <script>
                 //初始化
                 $(document).ready(getPage(0));
@@ -76,22 +77,6 @@
                             alert("未知错误！！！");
                         }
                     }, "json")
-                }
-
-                function add0(m) {
-                    return m < 10 ? '0' + m : m
-                }
-
-                function format(timestrip) {
-                    //timestrip是整数，否则要parseInt转换
-                    var time = new Date(timestrip);
-                    var y = time.getFullYear();
-                    var m = time.getMonth() + 1;
-                    var d = time.getDate();
-                    var h = time.getHours();
-                    var mm = time.getMinutes();
-                    var s = time.getSeconds();
-                    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
                 }
 
                 // 上一页

@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Neal
  */
 @Controller
-@RequestMapping("/index")
+@RequestMapping("/public")
 public class PublicArticleController {
 
     @Resource
@@ -32,12 +32,50 @@ public class PublicArticleController {
     private LikeService likeService;
 
     /**
-     * 首页
+     * 首页，侧边栏显示
      *
      * @return 视图
      */
     @RequestMapping("/index")
     public String index(ModelMap modelMap) {
+        asideContent(modelMap);
+        return "page/index";
+    }
+
+    /**
+     * 主页文章显示
+     *
+     * @param currentPage 当前页
+     * @return 文章包装数据
+     */
+    @RequestMapping(value = "/getArticleToVisitor", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getArticleToVisitor(Integer currentPage) {
+        Map<String, Object> map = new HashMap<>(2);
+        List<TArticleVO> list = articleByVisitorService.listArticleByVisit(currentPage);
+        if (list.size() != 0) {
+            map.put("code", 1);
+            map.put("data", list);
+        } else {
+            map.put("code", 0);
+        }
+        return map;
+    }
+
+    @RequestMapping("/readArticle")
+    public String readArticle(Integer articleId, ModelMap modelMap) {
+        TArticleVO articleVO = articleByVisitorService.getArticleById(articleId);
+        modelMap.addAttribute("articleVo", articleVO);
+        asideContent(modelMap);
+        return "page/read";
+    }
+
+    /**
+     * 右边栏，复用代码块
+     *
+     * @param modelMap ModelMap
+     */
+    private void asideContent(ModelMap modelMap) {
         //来访数
         int visitCount = visitService.countVisit();
         //点赞数
@@ -56,20 +94,5 @@ public class PublicArticleController {
         modelMap.addAttribute("originalArticleCount", originalArticleCount);
         modelMap.addAttribute("rankArticle", rankArticle);
         modelMap.addAttribute("categoryNumByArticle", categoryNumByArticle);
-        return "page/index";
-    }
-
-    @RequestMapping(value = "/getArticleToVisitor", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> getArticleToVisitor(Integer currentPage) {
-        Map<String, Object> map = new HashMap<>(2);
-        List<TArticleVO> list = articleByVisitorService.listArticleByVisit(currentPage);
-        if (list.size() != 0) {
-            map.put("code", 1);
-            map.put("data", list);
-        } else {
-            map.put("code", 0);
-        }
-        return map;
     }
 }

@@ -11,7 +11,7 @@
     <script src="/js/xss.js"></script>
 </head>
 <body>
-<#include "./aside.ftl">
+<#include "managerAside.ftl">
 
 <div class="container">
     <div class="panel panel-default">
@@ -33,24 +33,9 @@
                         <span class="input-group-addon">发布时间</span>
                         <input id="publishTime" type="text" class="form-control" placeholder="Time" name="articleTime"
                                maxlength="50">
+                        <script src="/js/timestampConversion.js"></script>
                         <script>
                             document.getElementById('publishTime').value = format(new Date().getTime());
-
-                            function add0(m) {
-                                return m < 10 ? '0' + m : m
-                            }
-
-                            function format(shijianchuo) {
-                                //shijianchuo是整数，否则要parseInt转换
-                                var time = new Date(shijianchuo);
-                                var y = time.getFullYear();
-                                var m = time.getMonth() + 1;
-                                var d = time.getDate();
-                                var h = time.getHours();
-                                var mm = time.getMinutes();
-                                var s = time.getSeconds();
-                                return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
-                            }
                         </script>
                     </div>
                     <br>
