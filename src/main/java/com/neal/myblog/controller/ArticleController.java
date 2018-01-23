@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * 文章Controller
+ * 文章Controller，用于后台博主
  *
  * @author Neal
  */

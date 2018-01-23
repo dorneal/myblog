@@ -5,12 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 启动器(记得使用注解扫描mapper)
  *
  * @author neal
  */
+@EnableTransactionManagement
 @SpringBootApplication
 @MapperScan("com.neal.myblog.mapper")
 public class MyblogApplication extends SpringBootServletInitializer {

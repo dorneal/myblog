@@ -5,6 +5,7 @@ import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.mapper.ArticleMapper;
 import com.neal.myblog.service.ArticleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveArticle(TArticleEX tArticleEX) {
         articleMapper.saveArticle(tArticleEX);
     }
@@ -32,11 +34,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateArticle(TArticleEX tArticleEX) {
         articleMapper.updateArticle(tArticleEX);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteArticle(long id) {
         articleMapper.deleteArticle(id);
     }
