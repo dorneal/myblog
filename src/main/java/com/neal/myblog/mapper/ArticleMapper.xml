@@ -88,7 +88,7 @@
         LIMIT #{currentPage}, 10
     </select>
     <!--查询出来的数据，用于更新与发布文章时，添加的搜索索引-->
-    <select id="getArticleBySearch" resultMap="articleVo" parameterType="long">
+    <select id="getArticleBySearch" resultMap="articleVo" parameterType="com.neal.myblog.entity.TArticleEX">
         SELECT
             a.article_id,
             a.article_title,
@@ -100,6 +100,46 @@
             t_article a INNER JOIN
             t_category c ON (a.category_id = c.category_id)
         WHERE
-            a.category_id = #{articleId}
+            a.article_title = #{articleTitle} AND a.article_time = #{articleTime}
+    </select>
+    <!--根据ID，得到封装对象-->
+    <select id="getArticleByManager" resultMap="articleVo" parameterType="long">
+        SELECT
+            t_article.article_id,
+            t_article.article_title,
+            t_article.article_time,
+            t_article.article_tag,
+            t_category.category_name,
+            (SELECT count(view_id)
+             FROM
+                 t_view
+             WHERE
+                 t_view.article_id = t_article.article_id
+            ) AS view_num,
+            (SELECT count(like_id)
+             FROM
+                 t_like
+             WHERE
+                 t_like.article_id = t_article.article_id
+            ) AS like_num
+        FROM
+            t_article
+            INNER JOIN
+            t_category ON (t_category.category_id = t_article.category_id)
+        WHERE article_id = #{articleId}
+    </select>
+    <!--查询所有文章，用于建立索引-->
+    <select id="getAllArticleByIndex" resultMap="articleVo">
+        SELECT
+            t_article.article_id,
+            t_article.article_title,
+            t_article.article_time,
+            t_article.article_content,
+            t_article.article_tag,
+            t_category.category_name
+        FROM
+            t_article
+            INNER JOIN
+            t_category ON (t_category.category_id = t_article.category_id)
     </select>
 </mapper>

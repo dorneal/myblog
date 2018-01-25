@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -51,7 +52,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public TArticleVO getArticleBySearch(long articleId) {
-        return articleMapper.getArticleBySearch(articleId);
+    public TArticleVO getArticleBySearch(TArticleEX tArticleEX) {
+        return articleMapper.getArticleBySearch(tArticleEX);
+    }
+
+    @Override
+    public TArticleVO getArticleByManager(long articleId) {
+        return articleMapper.getArticleByManager(articleId);
+    }
+
+    @Override
+    public List<TArticleVO> getAllArticleByIndex() {
+        return articleMapper.getAllArticleByIndex();
     }
 }

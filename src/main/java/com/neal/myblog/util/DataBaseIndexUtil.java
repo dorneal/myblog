@@ -14,7 +14,6 @@ import org.apache.lucene.store.FSDirectory;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.*;
 
 /*
    1.写一段传统的JDBC程序，将每条的用户信息从数据库读取出来
@@ -45,41 +44,6 @@ public class DataBaseIndexUtil {
 
     private DataBaseIndexUtil() {
         throw new AssertionError();
-    }
-
-    /**
-     * 启动服务器时，进行调用，创建索引
-     */
-    public static void createIndex() throws Exception {
-        dir = FSDirectory.open(Paths.get(INDEX_PATH));
-        analyzer = new StandardAnalyzer();
-        IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-        writer = new IndexWriter(dir, iwc);
-        Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/my_blog?user=root&useSSL=false&password=neal&useUnicode=true&characterEncoding=UTF-8";
-        Connection con = DriverManager.getConnection(url);
-        String query = "SELECT article_id,article_title,article_time,article_content,article_tag,category_name FROM t_article INNER JOIN t_category ON(t_article.category_id=t_category.category_id)";
-        PreparedStatement stmt = con.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            Document doc = new Document();
-            int id = rs.getInt("article_id");
-            String title = rs.getString("article_title");
-            Timestamp time = rs.getTimestamp("article_time");
-            String content = rs.getString("article_content");
-            String tag = rs.getString("article_tag");
-            String categoryName = rs.getString("category_name");
-            doc.add(new TextField("article_id", id + "", Field.Store.YES));
-            doc.add(new TextField("article_title", title + "", Field.Store.YES));
-            doc.add(new TextField("article_time", time + "", Field.Store.YES));
-            doc.add(new TextField("article_content", content + "", Field.Store.YES));
-            doc.add(new TextField("article_tag", tag + "", Field.Store.YES));
-            doc.add(new TextField("category_name", categoryName + "", Field.Store.YES));
-            writer.addDocument(doc);
-            writer.commit();
-        }
-        writer.close();
     }
 
     /**

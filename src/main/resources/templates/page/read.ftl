@@ -29,7 +29,7 @@
             <div class="date-author-info">
                 <span style="color: #FF0000;">${articleVo.tArticleEX.articleTag}</span>
                 <span>${articleVo.tArticleEX.articleTime}</span>
-                <span class="span-right"><span class="icon-eye"></span> <span>${articleVo.other.viewNum}</span></span>
+                <span class="span-right"><span class="icon-eye"></span> <span>${articleVo.other.viewNum}</span></span>&nbsp;&nbsp;
                 <span class="span-right"><span class="icon-heart"></span> <span>${articleVo.other.likeNum}</span></span>
             </div>
         </div>

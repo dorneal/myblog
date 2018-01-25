@@ -5,6 +5,8 @@ import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.service.ArticleByVisitorService;
 import com.neal.myblog.service.LikeService;
 import com.neal.myblog.service.VisitService;
+import com.neal.myblog.util.DataBaseSearcherUtil;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +37,8 @@ public class PublicArticleController {
     private LikeService likeService;
 
     /**
-     * 首页，侧边栏显示
+     * 首页，侧边栏显示，因为主要内容使用ajax查询，
+     * 所以只需要查询侧边栏的数据存入ModelMap就行了
      *
      * @return 视图
      */
@@ -64,7 +69,7 @@ public class PublicArticleController {
     }
 
     /**
-     * 查询跳转到改文章页面
+     * 查询跳转到该文章页面
      *
      * @param articleId 文章ID
      * @param modelMap  ModelMap
@@ -80,6 +85,38 @@ public class PublicArticleController {
         modelMap.addAttribute("tArticleEX2", tArticleEX2);
         asideContent(modelMap);
         return "page/read";
+    }
+
+    /**
+     * 客户端关键字搜索
+     *
+     * @param keywords 关键字
+     * @param modelMap ModelMap
+     * @return 视图
+     * @throws IOException    IOException
+     * @throws ParseException ParseException
+     */
+    @RequestMapping(value = "/searchArticleToRead", method = RequestMethod.POST)
+    public String searchArticleToRead(String keywords, ModelMap modelMap) throws IOException, ParseException {
+        List<String> list = DataBaseSearcherUtil.searchData("article_content", keywords, 10);
+        // 如果在文章内容没搜索到，则转到搜索标题，标题没搜索到，就搜索文章属性
+        if (list.size() == 0) {
+            list = DataBaseSearcherUtil.searchData("article_title", keywords, 10);
+            if (list.size() == 0) {
+                list = DataBaseSearcherUtil.searchData("category_name", keywords, 10);
+            }
+        }
+        List<TArticleVO> articleVOS = new ArrayList<>();
+        if (list.size() > 0) {
+            for (String articleId : list) {
+                //将查询的ID索引，进行数据库查询，返回文章list
+                articleVOS.add(articleByVisitorService.getArticleById(Long.parseLong(articleId)));
+            }
+        }
+        modelMap.addAttribute("articleVOS", articleVOS);
+        // 调用数据库的侧边栏查询
+        asideContent(modelMap);
+        return "page/index";
     }
 
     /**

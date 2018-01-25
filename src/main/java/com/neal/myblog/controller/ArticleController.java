@@ -6,7 +6,9 @@ import com.neal.myblog.entity.TCategory;
 import com.neal.myblog.service.ArticleService;
 import com.neal.myblog.service.CategoryService;
 import com.neal.myblog.util.DataBaseIndexUtil;
+import com.neal.myblog.util.DataBaseSearcherUtil;
 import com.neal.myblog.util.UploadUtil;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,14 +88,14 @@ public class ArticleController {
      */
     @RequestMapping("/updateArticle")
     public String updateArticle(TArticleEX tArticleEX) {
+        articleService.updateArticle(tArticleEX);
         // 更新文章时，更新该文章的搜索索引
-        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX.getArticleId());
+        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX);
         try {
             DataBaseIndexUtil.updateIndex(tArticleVO);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        articleService.updateArticle(tArticleEX);
         return "redirect:/article/managerArticlePage";
     }
 
@@ -137,14 +139,58 @@ public class ArticleController {
      */
     @RequestMapping(value = "/publishArticle", method = RequestMethod.POST)
     public String publishArticle(TArticleEX tArticleEX) {
+        articleService.saveArticle(tArticleEX);
         // 发布文章的同时，增加该文章的搜索索引
-        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX.getArticleId());
+        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX);
         try {
             DataBaseIndexUtil.addIndex(tArticleVO);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        articleService.saveArticle(tArticleEX);
+        return "redirect:/article/managerArticlePage";
+    }
+
+    /**
+     * 文章后台搜索
+     *
+     * @param keywords 关键字
+     * @return 视图
+     */
+    @RequestMapping(value = "/getArticleBySearch", method = RequestMethod.POST)
+    public String getArticleBySearch(String keywords, ModelMap modelMap) throws IOException, ParseException {
+        List<String> list = DataBaseSearcherUtil.searchData("article_content", keywords, 10);
+        // 如果在文章内容没搜索到，则转到搜索标题，标题没搜索到，就搜索文章属性
+        if (list.size() == 0) {
+            list = DataBaseSearcherUtil.searchData("article_title", keywords, 10);
+            if (list.size() == 0) {
+                list = DataBaseSearcherUtil.searchData("category_", keywords, 10);
+            }
+        }
+        // 不为0时候，才进行数据库查询
+        List<TArticleVO> articleVOS = new ArrayList<>();
+        if (list.size() > 0) {
+            for (String articleId : list) {
+                articleVOS.add(articleService.getArticleByManager(Long.parseLong(articleId)));
+            }
+        }
+        modelMap.addAttribute("articleVOS", articleVOS);
+        return "page/manager/articleList";
+    }
+
+    /**
+     * 用于博主在后台，随时建立全部搜索索引
+     *
+     * @return 视图
+     * @throws Exception Exception
+     */
+    @RequestMapping("/createSearchIndex")
+    public String createSearchIndex() throws Exception {
+        // 查询所有文章
+        List<TArticleVO> list = articleService.getAllArticleByIndex();
+        // 遍历 进行索引建立
+        for (TArticleVO tArticleVO : list) {
+            DataBaseIndexUtil.addIndex(tArticleVO);
+        }
         return "redirect:/article/managerArticlePage";
     }
 

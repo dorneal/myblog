@@ -43,63 +43,106 @@
             </label>文章
             </div>
             <div class="content-top-right">
-                <input type="search" name="" value="" placeholder="搜索一下">
+                <form name="searchForm" action="/public/searchArticleToRead" method="post">
+                    <input type="text" name="keywords" maxlength="20" placeholder="搜索一下">
+                    <input type="button" onclick="checkKeywords()" value="搜索">
+                </form>
+                <script>
+                    function checkKeywords() {
+                        // 如果关键词输入为空，则不提交
+                        if ($.trim($("input[name=keywords]").val()).length === 0) {
+                            alert("关键词不能为空！！！");
+                            return false;
+                        } else {
+                            $("form[name=searchForm]").submit();
+                        }
+                    }
+                </script>
             </div>
         </div>
-
         <div id="all-article">
+            <#if articleVOS??>
+                <#list articleVOS as list>
+                    <div class=article>
+                        <div class=article-content-introduction>
+                            <div class=article-title-link>
+                                <h3>
+                                    <a href="/public/readArticle?articleId=${list.tArticleEX.articleId}">${list.tArticleEX.articleTitle}</a>
+                                </h3>
+                            </div>
+                            <div class="article-content">
+                                <p>${list.tArticleEX.articleContent}</p>
+                            </div>
+                            <div class="date-author-info">
+                                <p>
+                                    <span class="icon-quill"></span> <span
+                                        style="margin-right: 10px">${list.tArticleEX.articleTag}</span>
+                                    <span class="icon-clock"></span> <span
+                                        style="margin-right: 10px">${list.tArticleEX.articleTime}</span>
+                                    <span class="icon-eye"></span> <span
+                                        style="margin-right: 10px">${list.other.viewNum}</span>
+                                    <span class="icon-heart"></span> <span
+                                        style="margin-right: 10px">${list.other.likeNum}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </#list>
+            </#if>
         </div>
+        <#if articleVOS??>
+        <#else>
         <#--时间戳转换格式-->
-        <script src="/js/timestampConversion.js"></script>
-        <script>
-            //初始化
-            $(document).ready(getPage(0));
-            // 请求
-            var currentPages = 0;
+                <script src="/js/timestampConversion.js"></script>
+                <script>
+                    //初始化
+                    $(document).ready(getPage(0));
+                    // 请求
+                    var currentPages = 0;
 
-            function getPage(currentPage) {
-                $.post("/public/getArticleToVisitor", {currentPage: currentPage}, function (data) {
-                    currentPages++;
-                    if (data.code === 1) {
-                        var s = "";
-                        for (var i in data.data) {
-                            s += "<div class=\"article\">\n" +
-                                    "                <div class=\"article-content-introduction\">\n" +
-                                    "                    <div class=\"article-title-link\">\n" +
-                                    "                        <h3><a href=/public/readArticle?articleId=" + data.data[i].tArticleEX.articleId + " title=" + data.data[i].tArticleEX.articleTitle + ">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
-                                    "                    </div>\n" +
-                                    "                    <div class=\"article-content\">\n" +
-                                    "                        <p>" + data.data[i].tArticleEX.articleContent + "</p>\n" +
-                                    "                    </div>\n" +
-                                    "                    <div class=\"date-author-info\">\n" +
-                                    "                        <p>\n" +
-                                    "                            <span class=\"icon-quill\"></span> <span style=\"margin-right: 10px\">" + data.data[i].tArticleEX.articleTag + "</span>\n" +
-                                    "                            <span class=\"icon-clock\"></span> <span style=\"margin-right: 10px\">" + format(data.data[i].tArticleEX.articleTime) + "</span>\n" +
-                                    "                            <span class=\"icon-eye\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.viewNum + "</span>\n" +
-                                    "                            <span class=\"icon-heart\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.likeNum + "</span>\n" +
-                                    "                        </p>\n" +
-                                    "                    </div>\n" +
-                                    "                </div>\n" +
-                                    "            </div>";
-                        }
-                        document.getElementById("all-article").innerHTML = s;
-                    } else if (data.code === 0) {
-                        $('div#content_bottom').find('h3').empty().text("没有了");
-                    } else {
-                        alert("未知错误！！！");
+                    function getPage(currentPage) {
+                        $.post("/public/getArticleToVisitor", {currentPage: currentPage}, function (data) {
+                            currentPages++;
+                            if (data.code === 1) {
+                                var s = "";
+                                for (var i in data.data) {
+                                    s += "<div class=\"article\">\n" +
+                                            "                <div class=\"article-content-introduction\">\n" +
+                                            "                    <div class=\"article-title-link\">\n" +
+                                            "                        <h3><a href=/public/readArticle?articleId=" + data.data[i].tArticleEX.articleId + " title=" + data.data[i].tArticleEX.articleTitle + ">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
+                                            "                    </div>\n" +
+                                            "                    <div class=\"article-content\">\n" +
+                                            "                        <p>" + data.data[i].tArticleEX.articleContent + "</p>\n" +
+                                            "                    </div>\n" +
+                                            "                    <div class=\"date-author-info\">\n" +
+                                            "                        <p>\n" +
+                                            "                            <span class=\"icon-quill\"></span> <span style=\"margin-right: 10px\">" + data.data[i].tArticleEX.articleTag + "</span>\n" +
+                                            "                            <span class=\"icon-clock\"></span> <span style=\"margin-right: 10px\">" + format(data.data[i].tArticleEX.articleTime) + "</span>\n" +
+                                            "                            <span class=\"icon-eye\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.viewNum + "</span>\n" +
+                                            "                            <span class=\"icon-heart\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.likeNum + "</span>\n" +
+                                            "                        </p>\n" +
+                                            "                    </div>\n" +
+                                            "                </div>\n" +
+                                            "            </div>";
+                                }
+                                document.getElementById("all-article").innerHTML += s;
+                            } else if (data.code === 0) {
+                                $('div#content_bottom').find('h3').empty().text("没有了");
+                            } else {
+                                alert("未知错误！！！");
+                            }
+                        }, "json")
                     }
-                }, "json")
-            }
-        </script>
-        <div id="content_bottom">
-            <h3 style="text-align: center;"><a id="loadingMore" style="cursor: pointer;">加载更多</a></h3>
-        </div>
-
-        <script type="text/javascript">
-            $("a#loadingMore").click(function () {
-                getPage(currentPages);
-            });
-        </script>
+                </script>
+                <div id="content_bottom">
+                    <h3 style="text-align: center;"><a id="loadingMore" style="cursor: pointer;">加载更多</a></h3>
+                </div>
+                <script type="text/javascript">
+                    $("a#loadingMore").click(function () {
+                        getPage(currentPages);
+                    });
+                </script>
+        </#if>
     </div>
     <!-- end content -->
 
