@@ -45,13 +45,13 @@
                 <a href="/public/readArticle?articleId=${tArticleEX.articleId}"
                    title="${tArticleEX.articleTitle}"><span>${tArticleEX.articleTitle}</span></a>
             <#else>
-                <a href="#" title="没有了"><span>没有了</span></a>
+                <a title="没有了"><span>哥，真的没有了</span></a>
             </#if>
             <#if (tArticleEX2.articleId)??>
                 <a href="/public/readArticle?articleId=${tArticleEX2.articleId}"
                    title="${tArticleEX2.articleTitle}"><span>${tArticleEX2.articleTitle}</span></a>
             <#else>
-                <a href="#" title="没有了"><span>没有了</span></a>
+                <a title="没有了"><span>哥，真的没有了</span></a>
             </#if>
         </div>
         <div id="conmment">

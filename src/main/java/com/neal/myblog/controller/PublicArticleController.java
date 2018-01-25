@@ -63,6 +63,13 @@ public class PublicArticleController {
         return map;
     }
 
+    /**
+     * 查询跳转到改文章页面
+     *
+     * @param articleId 文章ID
+     * @param modelMap  ModelMap
+     * @return 视图
+     */
     @RequestMapping("/readArticle")
     public String readArticle(Integer articleId, ModelMap modelMap) {
         TArticleVO articleVO = articleByVisitorService.getArticleById(articleId);
@@ -89,7 +96,7 @@ public class PublicArticleController {
         int articleCount = articleByVisitorService.countArticleAll();
         //原创文章数
         int originalArticleCount = articleByVisitorService.countArticleByOriginal();
-        //文章前五排行
+        //文章前十排行
         List<TArticleVO> rankArticle = articleByVisitorService.rankArticle();
         //分类文章数
         List<TArticleVO> categoryNumByArticle = articleByVisitorService.categoryNumByArticle();

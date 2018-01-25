@@ -49,4 +49,9 @@ public class ArticleServiceImpl implements ArticleService {
     public TArticleVO getArticleById(long id) {
         return articleMapper.getArticleById(id);
     }
+
+    @Override
+    public TArticleVO getArticleBySearch(long articleId) {
+        return articleMapper.getArticleBySearch(articleId);
+    }
 }

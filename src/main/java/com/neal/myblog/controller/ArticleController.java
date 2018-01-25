@@ -5,6 +5,7 @@ import com.neal.myblog.entity.TArticleVO;
 import com.neal.myblog.entity.TCategory;
 import com.neal.myblog.service.ArticleService;
 import com.neal.myblog.service.CategoryService;
+import com.neal.myblog.util.DataBaseIndexUtil;
 import com.neal.myblog.util.UploadUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -84,6 +86,13 @@ public class ArticleController {
      */
     @RequestMapping("/updateArticle")
     public String updateArticle(TArticleEX tArticleEX) {
+        // 更新文章时，更新该文章的搜索索引
+        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX.getArticleId());
+        try {
+            DataBaseIndexUtil.updateIndex(tArticleVO);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         articleService.updateArticle(tArticleEX);
         return "redirect:/article/managerArticlePage";
     }
@@ -96,6 +105,12 @@ public class ArticleController {
      */
     @RequestMapping("/deleteArticle")
     public String deleteArticle(long articleId) {
+        try {
+            // 删除文章的同时，删除该搜索索引
+            DataBaseIndexUtil.deleteIndex((int) articleId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         articleService.deleteArticle(articleId);
         return "redirect:/article/managerArticlePage";
     }
@@ -122,6 +137,13 @@ public class ArticleController {
      */
     @RequestMapping(value = "/publishArticle", method = RequestMethod.POST)
     public String publishArticle(TArticleEX tArticleEX) {
+        // 发布文章的同时，增加该文章的搜索索引
+        TArticleVO tArticleVO = articleService.getArticleBySearch(tArticleEX.getArticleId());
+        try {
+            DataBaseIndexUtil.addIndex(tArticleVO);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         articleService.saveArticle(tArticleEX);
         return "redirect:/article/managerArticlePage";
     }

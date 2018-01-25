@@ -47,12 +47,12 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     }
 
     @Override
-    public TArticleVO getArticleById(int articleId) {
+    public TArticleVO getArticleById(long articleId) {
         return articleByVisitorMapper.getArticleById(articleId);
     }
 
     @Override
-    public TArticleEX getArticlePreAndNext(int articleId) {
+    public TArticleEX getArticlePreAndNext(long articleId) {
         return articleByVisitorMapper.getArticlePreAndNext(articleId);
     }
 }

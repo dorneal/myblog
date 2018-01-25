@@ -105,7 +105,7 @@
         ORDER BY
             category_id;
     </select>
-    <select id="getArticleById" resultMap="articleVo" parameterType="int">
+    <select id="getArticleById" resultMap="articleVo" parameterType="long">
         SELECT
             t_article.article_id,
             t_article.article_title,
@@ -133,7 +133,7 @@
             article_id = #{articleId};
     </select>
     <!--用于查询上下页文章ID,以及文章标题-->
-    <select id="getArticlePreAndNext" resultMap="articleEx" parameterType="int">
+    <select id="getArticlePreAndNext" resultMap="articleEx" parameterType="long">
         SELECT
             t_article.article_id,
             t_article.article_title

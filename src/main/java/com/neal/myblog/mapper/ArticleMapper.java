@@ -48,4 +48,12 @@ public interface ArticleMapper {
      * @return TArticleVO
      */
     TArticleVO getArticleById(long articleId);
+
+    /**
+     * 所查询的数据，用于更新或者发布文章时，添加搜索索引
+     *
+     * @param articleId 文章ID
+     * @return TArticleVO
+     */
+    TArticleVO getArticleBySearch(long articleId);
 }

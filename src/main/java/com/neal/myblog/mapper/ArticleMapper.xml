@@ -87,4 +87,19 @@
             article_time DESC
         LIMIT #{currentPage}, 10
     </select>
+    <!--查询出来的数据，用于更新与发布文章时，添加的搜索索引-->
+    <select id="getArticleBySearch" resultMap="articleVo" parameterType="long">
+        SELECT
+            a.article_id,
+            a.article_title,
+            a.article_time,
+            a.article_content,
+            a.article_tag,
+            c.category_name
+        FROM
+            t_article a INNER JOIN
+            t_category c ON (a.category_id = c.category_id)
+        WHERE
+            a.category_id = #{articleId}
+    </select>
 </mapper>
