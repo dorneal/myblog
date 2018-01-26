@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/css/docs.css">
     <link rel="stylesheet" href="/css/readPage.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
 </head>
 <body>
 <!-- 主体 -->
@@ -38,7 +39,28 @@
         ${articleVo.tArticleEX.articleContent}
         </div>
         <div class="useful">
-            <button type="button"><span class="icon-smile"></span></button>
+            <button type="button" onclick="changeFace()"><span class="icon-smile"></span></button>
+            <script>
+                $(document).ready(changeFace());
+
+                function changeFace() {
+                    var $span = $("button[type=button]").find("span");
+                    var id = $("input[type=hidden]").val();
+                    if ($span.hasClass("icon-smile")) {
+                        $.post("/like/like", {"articleId": id}, function (data) {
+                            if (data.code === 1) {
+                                $span.removeClass("icon-smile").addClass("icon-smile2");
+                            }
+                        }, "json");
+                    } else {
+                        $.post("/like/dislike", {"articleId": id}, function (data) {
+                            if (data.code === 1) {
+                                $span.removeClass("icon-smile2").addClass("icon-smile");
+                            }
+                        }, "json");
+                    }
+                }
+            </script>
         </div>
         <div class="pageContext">
             <#if (tArticleEX.articleId)??>

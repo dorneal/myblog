@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 类别service 实现类
@@ -30,5 +31,21 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public int countVisit() {
         return visitRepository.countVisit();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveVisitor(TVisit tVisit) {
+        visitRepository.save(tVisit);
+    }
+
+    @Override
+    public int countByVisitIp(String visitIp) {
+        return visitRepository.countByVisitIp(visitIp);
+    }
+
+    @Override
+    public long getByVisitIp(String visitIp) {
+        return visitRepository.getByVisitIp(visitIp);
     }
 }

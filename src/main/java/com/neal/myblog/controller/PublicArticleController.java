@@ -2,8 +2,10 @@ package com.neal.myblog.controller;
 
 import com.neal.myblog.entity.TArticleEX;
 import com.neal.myblog.entity.TArticleVO;
+import com.neal.myblog.entity.TView;
 import com.neal.myblog.service.ArticleByVisitorService;
 import com.neal.myblog.service.LikeService;
+import com.neal.myblog.service.ViewService;
 import com.neal.myblog.service.VisitService;
 import com.neal.myblog.util.DataBaseSearcherUtil;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,8 @@ public class PublicArticleController {
     private VisitService visitService;
     @Resource
     private LikeService likeService;
+    @Resource
+    private ViewService viewService;
 
     /**
      * 首页，侧边栏显示，因为主要内容使用ajax查询，
@@ -76,7 +81,20 @@ public class PublicArticleController {
      * @return 视图
      */
     @RequestMapping("/readArticle")
-    public String readArticle(Integer articleId, ModelMap modelMap) {
+    public String readArticle(Integer articleId, ModelMap modelMap, HttpServletRequest request) {
+        //查询出访客ID，根据当访客点击这批文章时，根据文章ID，跟访客ID，查询是否已经浏览过
+        String ip = (String) request.getSession().getAttribute("visitIp");
+        if (ip != null) {
+            long visitId = visitService.getByVisitIp(ip);
+            int count = viewService.countByViewId(articleId, visitId);
+            if (count == 0) {
+                TView tView = new TView();
+                tView.setArticleId(articleId);
+                tView.setVisitId(visitId);
+                viewService.saveView(tView);
+            }
+        }
+        // 查询出，上下页数据，还有主要该文章数据
         TArticleVO articleVO = articleByVisitorService.getArticleById(articleId);
         TArticleEX tArticleEX = articleByVisitorService.getArticlePreAndNext(articleId - 1);
         TArticleEX tArticleEX2 = articleByVisitorService.getArticlePreAndNext(articleId + 1);

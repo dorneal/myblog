@@ -26,4 +26,27 @@ public interface VisitService {
      * @return int
      */
     int countVisit();
+
+    /**
+     * 插入来访者数据
+     *
+     * @param tVisit TVisit
+     */
+    void saveVisitor(TVisit tVisit);
+
+    /**
+     * 根据IP地址，判断是否已经存在，返回count
+     *
+     * @param visitIp IP地址
+     * @return int
+     */
+    int countByVisitIp(String visitIp);
+
+    /**
+     * 根据IP，查询访客ID
+     *
+     * @param visitIp 访客IP地址
+     * @return 访客ID
+     */
+    long getByVisitIp(String visitIp);
 }
