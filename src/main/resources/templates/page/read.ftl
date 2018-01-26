@@ -41,7 +41,18 @@
         <div class="useful">
             <button type="button" onclick="changeFace()"><span class="icon-smile"></span></button>
             <script>
-                $(document).ready(changeFace());
+                $(document).ready(
+                        function () {
+                            var $span = $("button[type=button]").find("span");
+                            var id = $("input[type=hidden]").val();
+                            $.post("/like/showLike", {"articleId": id}, function (data) {
+                                if (data.code === 1) {
+                                    $span.removeClass("icon-smile").addClass("icon-smile2");
+                                } else {
+                                    $span.removeClass("icon-smile2").addClass("icon-smile");
+                                }
+                            }, "json");
+                        });
 
                 function changeFace() {
                     var $span = $("button[type=button]").find("span");
@@ -130,8 +141,10 @@
             <h3>文章分类</h3>
             <ul>
                 <#list categoryNumByArticle as categoryList>
-                    <li><a href="" title="">${categoryList.tCategory.categoryName}</a> <span
-                            class="icon-bookmarks"></span> <span>${categoryList.other.articleNum}</span></li>
+                    <li><a href="/category/getCategoryArticle?categoryId=${categoryList.tCategory.categoryId}"
+                           title="${categoryList.tCategory.categoryName}">${categoryList.tCategory.categoryName}</a>
+                        <span
+                                class="icon-bookmarks"></span> <span>${categoryList.other.articleNum}</span></li>
                 </#list>
             </ul>
         </div>

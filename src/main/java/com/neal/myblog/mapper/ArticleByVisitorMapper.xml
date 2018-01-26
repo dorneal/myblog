@@ -92,6 +92,7 @@
     <!--查询分类文章数-->
     <select id="categoryNumByArticle" resultMap="articleVo">
         SELECT
+            category_id,
             category_name,
             (
                 SELECT count(article_id)
@@ -139,5 +140,21 @@
             t_article.article_title
         FROM t_article
         WHERE article_id = #{articleId}
+    </select>
+    <select id="getArticleByCategory" resultMap="articleVo" parameterType="long">
+        SELECT
+            article_id,
+            article_title,
+            article_time,
+            article_content,
+            article_tag,
+            (SELECT count(t_view.view_id)
+             FROM t_view
+             WHERE t_view.article_id = t_article.article_id) AS view_num,
+            (SELECT count(t_like.like_id)
+             FROM t_like
+             WHERE t_like.article_id = t_article.article_id) AS like_num
+        FROM t_article
+        WHERE t_article.category_id = #{categoryId};
     </select>
 </mapper>

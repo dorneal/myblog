@@ -55,4 +55,9 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     public TArticleEX getArticlePreAndNext(long articleId) {
         return articleByVisitorMapper.getArticlePreAndNext(articleId);
     }
+
+    @Override
+    public List<TArticleVO> getArticleByCategory(long categoryId) {
+        return articleByVisitorMapper.getArticleByCategory(categoryId);
+    }
 }

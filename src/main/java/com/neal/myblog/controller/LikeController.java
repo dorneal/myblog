@@ -85,4 +85,30 @@ public class LikeController {
         }
         return map;
     }
+
+    /**
+     * 查询是否已经点赞，用于访客再次访问该文章时
+     *
+     * @param articleId 文章ID
+     * @param request   HttpServletRequest
+     * @return json
+     */
+    @RequestMapping("/showLike")
+    @ResponseBody
+    public Map<String, Object> showLike(long articleId, HttpServletRequest request) {
+        // 获取文章ID，跟访客ID，进行查询是否已经点赞
+        Map<String, Object> map = new HashMap<>(1);
+        String visitIp = (String) request.getSession().getAttribute("visitIp");
+        if (visitIp != null) {
+            long visitId = visitService.getByVisitIp(visitIp);
+            // 已经点赞
+            int count = likeService.countByArticleId(articleId, visitId);
+            if (count != 0) {
+                map.put("code", 1);
+            } else {
+                map.put("code", 0);
+            }
+        }
+        return map;
+    }
 }

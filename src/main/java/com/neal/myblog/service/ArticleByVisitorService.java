@@ -62,4 +62,13 @@ public interface ArticleByVisitorService {
      * @return TArticleEX
      */
     TArticleEX getArticlePreAndNext(long articleId);
+
+
+    /**
+     * 根据属性ID，获取该分类下的所有文章
+     *
+     * @param categoryId 属性ID
+     * @return TArticleVO
+     */
+    List<TArticleVO> getArticleByCategory(long categoryId);
 }
