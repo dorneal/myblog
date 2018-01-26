@@ -60,4 +60,9 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     public List<TArticleVO> getArticleByCategory(long categoryId) {
         return articleByVisitorMapper.getArticleByCategory(categoryId);
     }
+
+    @Override
+    public List<TArticleVO> getArticleByTime(String time) {
+        return articleByVisitorMapper.getArticleByTime(time);
+    }
 }

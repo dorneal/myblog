@@ -35,11 +35,26 @@
             <div class="content-top-left">
                 <a href="" title="">只看原创</a>&nbsp;&nbsp;
                 查看<label>
-                <select name="years">
-                    <option value="1">2018</option>
-                    <option value="2">2017</option>
-                    <option value="3">2016</option>
+                <select name="year">
+                    <option>请选择年份</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
                 </select>
+                <script>
+                    $(function () {
+                        $("select[name=year]").on('change', function () {
+                            var selectId = $('select[name=year] option:selected');
+                            if (selectId.val() == 2018) {
+                                window.location.href = "/public/articleByYear?year=" + selectId.val();
+                            } else if (selectId.val() == 2017) {
+                                window.location.href = "/public/articleByYear?year=" + selectId.val();
+                            } else if (selectId.val() == 2016) {
+                                window.location.href = "/public/articleByYear?year=" + selectId.val();
+                            }
+                        })
+                    });
+                </script>
             </label>文章
             </div>
             <div class="content-top-right">

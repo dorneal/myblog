@@ -138,6 +138,20 @@ public class PublicArticleController {
     }
 
     /**
+     * 根据年份，获取文章
+     *
+     * @param year 年份
+     * @return 视图
+     */
+    @RequestMapping("/articleByYear")
+    public String articleByYear(String year, ModelMap modelMap) {
+        List<TArticleVO> list = articleByVisitorService.getArticleByTime(year);
+        modelMap.addAttribute("articleVOS", list);
+        asideContent(modelMap);
+        return "page/yearList";
+    }
+
+    /**
      * 右边栏，复用代码块
      *
      * @param modelMap ModelMap

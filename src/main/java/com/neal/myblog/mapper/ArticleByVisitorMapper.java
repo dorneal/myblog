@@ -68,7 +68,15 @@ public interface ArticleByVisitorMapper {
      * 根据属性ID，获取该分类下的所有文章
      *
      * @param categoryId 属性ID
-     * @return TArticleVO
+     * @return List
      */
     List<TArticleVO> getArticleByCategory(long categoryId);
+
+    /**
+     * 得到某个时间年份的所有文章
+     *
+     * @param time 年份
+     * @return List
+     */
+    List<TArticleVO> getArticleByTime(String time);
 }

@@ -71,4 +71,12 @@ public interface ArticleByVisitorService {
      * @return TArticleVO
      */
     List<TArticleVO> getArticleByCategory(long categoryId);
+
+    /**
+     * 得到某个时间年份的所有文章
+     *
+     * @param time 年份
+     * @return List
+     */
+    List<TArticleVO> getArticleByTime(String time);
 }
