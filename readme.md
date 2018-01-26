@@ -1,5 +1,5 @@
 #我的个人博客 V2.0
-使用框架：SpringBoot,SpringMVC,Spring Data JPA,Mybatis
+使用框架：SpringBoot,SpringMVC,Spring Data JPA,Mybatis，Lucene
 使用FreeMaker做模板引擎
 
 2018.01.19
@@ -14,4 +14,7 @@
 搜索采用lucene框架，进行数据库建立搜索索引的基础上，进行数据查询，得到ID，再进行数据库查询
 
 2018.01.26
+完成点赞功能，浏览自增判断，年份查找功能，分类文章功能
+
+
 基本功能已经全部实现
