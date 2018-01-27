@@ -1,3 +1,4 @@
 INSERT INTO `t_visit` VALUES (1, '172.0.0.1');
 INSERT INTO `t_visit` VALUES (2, '192.168.1.109');
 INSERT INTO `t_visit` VALUES (3, '192.168.1.101');
+INSERT INTO `t_visit` VALUES (4, '0:0:0:0:0:0:0:1');
