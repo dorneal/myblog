@@ -45,7 +45,7 @@
                 // 请求
                 function getPage(page, size) {
                     var $tbodyVisit = $("#tbodyVisit");
-                    $.post("/manager/managerVisit", {page: page, size: size}, function (data) {
+                    $.post("/back/managerVisit", {page: page, size: size}, function (data) {
                         if (data.code === 1) {
                             $tbodyVisit.empty();
                             var s = "";

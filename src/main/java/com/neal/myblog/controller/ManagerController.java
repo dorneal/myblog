@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * @author Neal
  */
-@RequestMapping("/manager")
+@RequestMapping("/back")
 @Controller
 public class ManagerController {
     @Resource

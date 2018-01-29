@@ -51,7 +51,7 @@ public class UserController {
             // 设置session过期时间
             request.getSession().setMaxInactiveInterval(30 * 60);
             map.put("code", 1);
-            map.put("url", "/manager/manager");
+            map.put("url", "/back/manager");
         } else {
             map.put("msg", "密码错误！！！");
         }
