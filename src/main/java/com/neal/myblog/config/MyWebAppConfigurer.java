@@ -4,7 +4,9 @@ import com.neal.myblog.interceptor.LoginInterceptor;
 import com.neal.myblog.interceptor.VisitInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
@@ -37,5 +39,17 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/user/loginPage", "/user/login");
         registry.addInterceptor(myInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
+    }
+
+    /**
+     * 设置首页
+     *
+     * @param registry ViewControllerRegistry
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("forward:/public/index");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        super.addViewControllers(registry);
     }
 }
