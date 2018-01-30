@@ -73,7 +73,7 @@ public class DataBaseIndexUtil {
         dir = FSDirectory.open(Paths.get(INDEX_PATH));
         analyzer = new StandardAnalyzer();
         IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-        iwc.setOpenMode(IndexWriterConfig.OpenMode.APPEND);
+        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         writer = new IndexWriter(dir, iwc);
         writer.addDocument(getDoc(tArticleVO));
         writer.commit();
@@ -111,31 +111,4 @@ public class DataBaseIndexUtil {
         doc.add(new TextField("category_name", tArticleVO.gettCategory().getCategoryName() + "", Field.Store.YES));
         return doc;
     }
-
-//    public static void main(String[] args) {
-//        TArticleVO tArticleVO = new TArticleVO();
-//
-//        TArticleEX tArticleEX = new TArticleEX();
-//        tArticleEX.setArticleId(3);
-//        tArticleEX.setArticleContent("nothing");
-//        tArticleEX.setArticleTime(new Timestamp(System.currentTimeMillis()));
-//        tArticleEX.setArticleTag("原创");
-//        tArticleEX.setArticleTitle("案例");
-//        tArticleEX.setCategoryId(3);
-//
-//        TCategory tCategory = new TCategory();
-//        tCategory.setCategoryId(3);
-//        tCategory.setCategoryName("math");
-//
-//        tArticleVO.settArticleEX(tArticleEX);
-//        tArticleVO.settCategory(tCategory);
-//        try {
-////            createIndex();
-//            updateIndex(tArticleVO);
-////            deleteIndex(tArticleVO);
-////            addIndex(tArticleVO);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

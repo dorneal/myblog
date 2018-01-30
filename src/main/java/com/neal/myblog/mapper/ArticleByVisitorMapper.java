@@ -42,6 +42,20 @@ public interface ArticleByVisitorMapper {
     List<TArticleVO> rankArticle();
 
     /**
+     * 推荐文章，默认为（平均值中间的）
+     *
+     * @return List
+     */
+    List<TArticleVO> listSuggestArticle();
+
+    /**
+     * 只看原创
+     *
+     * @return List
+     */
+    List<TArticleVO> listOriginal();
+
+    /**
      * 查询分类数文章
      *
      * @return List

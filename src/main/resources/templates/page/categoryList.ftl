@@ -22,7 +22,7 @@
 <body>
 <!-- header -->
 <div id="header">
-    <iframe src="/css/rain.html"></iframe>
+    <iframe src="/rain.html"></iframe>
 </div>
 <!-- end header -->
 
@@ -33,7 +33,7 @@
     <div id="content">
         <div class="content-top">
             <div class="content-top-left">
-                <a href="" title="">只看原创</a>&nbsp;&nbsp;
+                <a href="/public/getOriginal" title="">只看原创</a>&nbsp;&nbsp;
                 查看<label>
                 <select name="year">
                     <option>请选择年份</option>
@@ -150,11 +150,10 @@
         <div class="aside-suggest">
             <h3>阅读推荐</h3>
             <ul>
-                <li><a href="" title="">Ubuntu简单美化</a></li>
-                <li><a href="" title="">Idea的轻使用</a></li>
-                <li><a href="" title="">Sublime text3配置</a></li>
-                <li><a href="" title=""></a></li>
-                <li><a href="" title=""></a></li>
+                <#list listSuggestArticle as list>
+                    <li><a href="/public/readArticle?articleId=${list.tArticleEX.articleId}"
+                           title="${list.tArticleEX.articleTitle}">${list.tArticleEX.articleTitle}</a></li>
+                </#list>
             </ul>
         </div>
     </div>

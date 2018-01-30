@@ -38,7 +38,7 @@
     <div id="content">
         <div class="content-top">
             <div class="content-top-left">
-                <a href="/public/getOriginal" title="只看原创">只看原创</a>&nbsp;&nbsp;
+                <a href="/public/getOriginal" title="">只看原创</a>&nbsp;&nbsp;
                 查看<label>
                 <select name="year">
                     <option>请选择年份</option>
@@ -65,7 +65,7 @@
             <div class="content-top-right">
                 <form name="searchForm" action="/public/searchArticleToRead" method="post">
                     <input type="text" name="keywords" maxlength="20" placeholder="搜索一下">
-                    <input type="button" onclick="checkKeywords()" value="搜索">
+                    <input type="button"  onclick="checkKeywords()" value="搜索">
                     <script>
                         $(function () {
                             $("input[name=keywords]").click(function () {
@@ -119,59 +119,6 @@
                 </#list>
             </#if>
         </div>
-        <#if articleVOS??>
-        <#else>
-        <#--时间戳转换格式-->
-                <script src="/js/timestampConversion.js"></script>
-                <script>
-                    //初始化
-                    $(document).ready(getPage(0));
-                    // 请求
-                    var currentPages = 0;
-
-                    function getPage(currentPage) {
-                        $.post("/public/getArticleToVisitor", {currentPage: currentPage}, function (data) {
-                            currentPages++;
-                            if (data.code === 1) {
-                                var s = "";
-                                for (var i in data.data) {
-                                    s += "<div class=\"article\">\n" +
-                                            "                <div class=\"article-content-introduction\">\n" +
-                                            "                    <div class=\"article-title-link\">\n" +
-                                            "                        <h3><a href=/public/readArticle?articleId=" + data.data[i].tArticleEX.articleId + " title=" + data.data[i].tArticleEX.articleTitle + ">" + data.data[i].tArticleEX.articleTitle + "</a></h3>\n" +
-                                            "                    </div>\n" +
-                                            "                    <div class=\"article-content\">\n" +
-                                            "                        <p>" + data.data[i].tArticleEX.articleContent + "</p>\n" +
-                                            "                    </div>\n" +
-                                            "                    <div class=\"date-author-info\">\n" +
-                                            "                        <p>\n" +
-                                            "                            <span class=\"icon-quill\"></span> <span style=\"margin-right: 10px\">" + data.data[i].tArticleEX.articleTag + "</span>\n" +
-                                            "                            <span class=\"icon-clock\"></span> <span style=\"margin-right: 10px\">" + format(data.data[i].tArticleEX.articleTime) + "</span>\n" +
-                                            "                            <span class=\"icon-eye\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.viewNum + "</span>\n" +
-                                            "                            <span class=\"icon-heart\"></span> <span style=\"margin-right: 10px\">" + data.data[i].other.likeNum + "</span>\n" +
-                                            "                        </p>\n" +
-                                            "                    </div>\n" +
-                                            "                </div>\n" +
-                                            "            </div>";
-                                }
-                                document.getElementById("all-article").innerHTML += s;
-                            } else if (data.code === 0) {
-                                $('div#content_bottom').find('h3').empty().text("没有了");
-                            } else {
-                                alert("未知错误！！！");
-                            }
-                        }, "json")
-                    }
-                </script>
-                <div id="content_bottom">
-                    <h3 style="text-align: center;"><a id="loadingMore" style="cursor: pointer;">加载更多</a></h3>
-                </div>
-                <script type="text/javascript">
-                    $("a#loadingMore").click(function () {
-                        getPage(currentPages);
-                    });
-                </script>
-        </#if>
     </div>
     <!-- end content -->
 

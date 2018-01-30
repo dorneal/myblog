@@ -152,28 +152,44 @@ public class PublicArticleController {
     }
 
     /**
+     * 只看原创
+     *
+     * @param modelMap ModelMap
+     * @return 视图
+     */
+    @RequestMapping("/getOriginal")
+    public String getOriginal(ModelMap modelMap) {
+        modelMap.addAttribute("articleVOS", articleByVisitorService.listOriginal());
+        asideContent(modelMap);
+        return "page/original";
+    }
+
+    /**
      * 右边栏，复用代码块
      *
      * @param modelMap ModelMap
      */
     private void asideContent(ModelMap modelMap) {
-        //来访数
+        // 来访数
         int visitCount = visitService.countVisit();
-        //点赞数
+        // 点赞数
         int likeCount = likeService.countLike();
-        //文章总数
+        // 文章总数
         int articleCount = articleByVisitorService.countArticleAll();
-        //原创文章数
+        // 原创文章数
         int originalArticleCount = articleByVisitorService.countArticleByOriginal();
-        //文章前十排行
+        // 文章前十排行
         List<TArticleVO> rankArticle = articleByVisitorService.rankArticle();
-        //分类文章数
+        // 分类文章数
         List<TArticleVO> categoryNumByArticle = articleByVisitorService.categoryNumByArticle();
+        // 文章推荐
+        List<TArticleVO> listSuggestArticle = articleByVisitorService.listSuggestArticle();
         modelMap.addAttribute("visitCount", visitCount);
         modelMap.addAttribute("likeCount", likeCount);
         modelMap.addAttribute("articleCount", articleCount);
         modelMap.addAttribute("originalArticleCount", originalArticleCount);
         modelMap.addAttribute("rankArticle", rankArticle);
         modelMap.addAttribute("categoryNumByArticle", categoryNumByArticle);
+        modelMap.addAttribute("listSuggestArticle", listSuggestArticle);
     }
 }

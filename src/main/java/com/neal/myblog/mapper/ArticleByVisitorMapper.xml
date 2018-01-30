@@ -87,7 +87,7 @@
             t_article
         ORDER BY
             view_num DESC
-        LIMIT 0, 5
+        LIMIT 8
     </select>
     <!--查询分类文章数-->
     <select id="categoryNumByArticle" resultMap="articleVo">
@@ -182,5 +182,43 @@
             t_article
         WHERE
             year(t_article.article_time) = #{time};
+    </select>
+    <!--只看原创-->
+    <select id="listOriginal" resultMap="articleVo">
+        SELECT
+            article_id,
+            article_title,
+            article_time,
+            article_content,
+            article_tag,
+            (
+                SELECT count(t_view.view_id)
+                FROM
+                    t_view
+                WHERE
+                    t_view.article_id = t_article.article_id
+            ) AS view_num,
+            (
+                SELECT count(t_like.like_id)
+                FROM
+                    t_like
+                WHERE
+                    t_like.article_id = t_article.article_id
+            ) AS like_num
+        FROM
+            t_article
+        WHERE
+            article_tag = '原创'
+        ORDER BY article_time DESC;
+    </select>
+    <!--文章推荐-->
+    <select id="listSuggestArticle" resultMap="articleVo">
+        SELECT
+            article_id,
+            article_title
+        FROM
+            t_article
+        ORDER BY RAND()
+        LIMIT 8
     </select>
 </mapper>

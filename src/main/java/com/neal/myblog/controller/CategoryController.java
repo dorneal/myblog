@@ -42,12 +42,15 @@ public class CategoryController {
         List<TArticleVO> rankArticle = articleByVisitorService.rankArticle();
         //分类文章数
         List<TArticleVO> categoryNumByArticle = articleByVisitorService.categoryNumByArticle();
+        // 文章推荐
+        List<TArticleVO> listSuggestArticle = articleByVisitorService.listSuggestArticle();
         modelMap.addAttribute("visitCount", visitCount);
         modelMap.addAttribute("likeCount", likeCount);
         modelMap.addAttribute("articleCount", articleCount);
         modelMap.addAttribute("originalArticleCount", originalArticleCount);
         modelMap.addAttribute("rankArticle", rankArticle);
         modelMap.addAttribute("categoryNumByArticle", categoryNumByArticle);
+        modelMap.addAttribute("listSuggestArticle", listSuggestArticle);
         return "page/categoryList";
     }
 }

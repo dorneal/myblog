@@ -41,6 +41,20 @@ public interface ArticleByVisitorService {
     List<TArticleVO> rankArticle();
 
     /**
+     * 只看原创
+     *
+     * @return List
+     */
+    List<TArticleVO> listOriginal();
+
+    /**
+     * 推荐文章，默认为（平均值中间的）
+     *
+     * @return List
+     */
+    List<TArticleVO> listSuggestArticle();
+
+    /**
      * 查询分类数文章
      *
      * @return List

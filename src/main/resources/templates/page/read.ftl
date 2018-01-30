@@ -23,6 +23,12 @@
 <body>
 <!-- 主体 -->
 <div id="main">
+    <ol class="breadcrumb">
+        <span class="icon-location2"></span>
+        <li class="active">黑天白夜</li>
+        <li><a href="/public/index">Home</a></li>
+        <li class="active">${articleVo.tArticleEX.articleTitle}</li>
+    </ol>
     <!-- 内容部分 -->
     <div id="content">
         <div class="article-title-info">
@@ -88,22 +94,43 @@
             </#if>
         </div>
         <div id="conmment">
-            <h3>留下你的脚印</h3>
-            <div class="comment-info">
-                <form action="read_submit" method="get" accept-charset="utf-8">
-                    <textarea name="conmment" placeholder="来说两句吧.." rows="4" cols="70" style="resize: none;"></textarea>
-                    <br/>
-                    <button type="submit" class="btn btn-default btn-success">就这样</button>
-                </form>
-            </div>
-            <div class="comment-content">
-                <h4>查看评论</h4>
-                <div class="comment-content-detail">
-                    <p><span>1楼</span> 2018.01.03 15:48:32</p>
-                    <p>说的很不错哦，大赞！</p>
-                    <a href="" title="">回复</a>
-                </div>
-            </div>
+            <!--PC和WAP自适应版-->
+            <div id="SOHUCS" sid="${articleVo.tArticleEX.articleId}"></div>
+            <script type="text/javascript">
+                (function () {
+                    var appid = 'cyteoUJ8P';
+                    var conf = '23c0e8026b1cba45ef9f51cfdd5bc48b';
+                    var width = window.innerWidth || document.documentElement.clientWidth;
+                    if (width < 960) {
+                        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                    } else {
+                        var loadJs = function (d, a) {
+                            var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                            var b = document.createElement("script");
+                            b.setAttribute("type", "text/javascript");
+                            b.setAttribute("charset", "UTF-8");
+                            b.setAttribute("src", d);
+                            if (typeof a === "function") {
+                                if (window.attachEvent) {
+                                    b.onreadystatechange = function () {
+                                        var e = b.readyState;
+                                        if (e === "loaded" || e === "complete") {
+                                            b.onreadystatechange = null;
+                                            a()
+                                        }
+                                    }
+                                } else {
+                                    b.onload = a
+                                }
+                            }
+                            c.appendChild(b)
+                        };
+                        loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                            window.changyan.api.config({appid: appid, conf: conf})
+                        });
+                    }
+                })();
+            </script>
         </div>
     </div>
 
@@ -151,11 +178,10 @@
         <div class="aside-suggest">
             <h3>阅读推荐</h3>
             <ul>
-                <li><a href="" title="">Ubuntu简单美化</a></li>
-                <li><a href="" title="">Idea的轻使用</a></li>
-                <li><a href="" title="">Sublime text3配置</a></li>
-                <li><a href="" title=""></a></li>
-                <li><a href="" title=""></a></li>
+                <#list listSuggestArticle as list>
+                    <li><a href="/public/readArticle?articleId=${list.tArticleEX.articleId}"
+                           title="${list.tArticleEX.articleTitle}">${list.tArticleEX.articleTitle}</a></li>
+                </#list>
             </ul>
         </div>
     </div>

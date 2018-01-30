@@ -42,6 +42,16 @@ public class ArticleByVisitorServiceImpl implements ArticleByVisitorService {
     }
 
     @Override
+    public List<TArticleVO> listOriginal() {
+        return articleByVisitorMapper.listOriginal();
+    }
+
+    @Override
+    public List<TArticleVO> listSuggestArticle() {
+        return articleByVisitorMapper.listSuggestArticle();
+    }
+
+    @Override
     public List<TArticleVO> categoryNumByArticle() {
         return articleByVisitorMapper.categoryNumByArticle();
     }

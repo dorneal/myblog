@@ -207,14 +207,14 @@ public class ArticleController {
         System.out.println("fileName-->" + fileName);
         System.out.println("getContentType-->" + contentType);
         //暂时使用具体路径，具体部署，使用图片服务器，部署到Tomcat
-        String filePath = "F:\\Workspace\\myblog\\myblog\\src\\main\\resources\\static\\upload";
-        System.out.println(filePath);
+        String filePath = "D:\\uploads";
         String s = "";
         try {
             s = UploadUtil.uploadImage(file.getBytes(), filePath, fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(s);
         Map<String, String> map = new HashMap<>(1);
         map.put("url", s);
         //返回json
