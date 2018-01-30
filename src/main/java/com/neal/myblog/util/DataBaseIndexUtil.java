@@ -73,7 +73,7 @@ public class DataBaseIndexUtil {
         dir = FSDirectory.open(Paths.get(INDEX_PATH));
         analyzer = new StandardAnalyzer();
         IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-        iwc.setOpenMode(IndexWriterConfig.OpenMode.APPEND);
+        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
         writer = new IndexWriter(dir, iwc);
         writer.addDocument(getDoc(tArticleVO));
         writer.commit();
