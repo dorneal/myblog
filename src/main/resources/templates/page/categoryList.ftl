@@ -194,9 +194,8 @@
 <!-- footer -->
 <div id="footer">
     <p>Design By Neal Copyright&copy;2018 | 备案号：<a href="http://www.miitbeian.gov.cn/"
-                                                   target="_blank">湘ICP备17017819号</a> | <a
-            href="https://baike.baidu.com/item/%E9%81%BF%E9%A3%8E%E6%B8%AF%E5%8E%9F%E5%88%99" target="_blank">避风港原则</a>
-    </p>
+                                                   target="_blank">湘ICP备17017819号</a> <br> <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030302000105"><p><img src="/images/icon/备案图标.png"/> 湘公网安备 43030302000105号</p></a>  <a
+        href="https://baike.baidu.com/item/%E9%81%BF%E9%A3%8E%E6%B8%AF%E5%8E%9F%E5%88%99" target="_blank">避风港原则</a>
 </div>
 <!-- end footer -->
 </body>

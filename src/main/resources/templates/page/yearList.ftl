@@ -22,18 +22,23 @@
 <body>
 <!-- header -->
 <div id="header">
-    <iframe src="/css/rain.html"></iframe>
+    <iframe src="/rain.html"></iframe>
 </div>
 <!-- end header -->
 
 <!-- Bootstrap3 -->
 <!-- main -->
 <div id="main">
+    <ol class="breadcrumb">
+        <span class="icon-location2"></span>
+        <li class="active">黑天白夜</li>
+        <li><a href="/public/index">Home</a></li>
+    </ol>
     <!-- content -->
     <div id="content">
         <div class="content-top">
             <div class="content-top-left">
-                <a href="" title="">只看原创</a>&nbsp;&nbsp;
+                <a href="/public/getOriginal" title="只看原创">只看原创</a>&nbsp;&nbsp;
                 查看<label>
                 <select name="year">
                     <option>请选择年份</option>
@@ -150,11 +155,10 @@
         <div class="aside-suggest">
             <h3>阅读推荐</h3>
             <ul>
-                <li><a href="" title="">Ubuntu简单美化</a></li>
-                <li><a href="" title="">Idea的轻使用</a></li>
-                <li><a href="" title="">Sublime text3配置</a></li>
-                <li><a href="" title=""></a></li>
-                <li><a href="" title=""></a></li>
+                <#list listSuggestArticle as list>
+                    <li><a href="/public/readArticle?articleId=${list.tArticleEX.articleId}"
+                           title="${list.tArticleEX.articleTitle}">${list.tArticleEX.articleTitle}</a></li>
+                </#list>
             </ul>
         </div>
     </div>
@@ -195,9 +199,8 @@
 <!-- footer -->
 <div id="footer">
     <p>Design By Neal Copyright&copy;2018 | 备案号：<a href="http://www.miitbeian.gov.cn/"
-                                                   target="_blank">湘ICP备17017819号</a> | <a
-            href="https://baike.baidu.com/item/%E9%81%BF%E9%A3%8E%E6%B8%AF%E5%8E%9F%E5%88%99" target="_blank">避风港原则</a>
-    </p>
+                                                   target="_blank">湘ICP备17017819号</a> <br> <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030302000105"><p><img src="/images/icon/备案图标.png"/> 湘公网安备 43030302000105号</p></a>  <a
+        href="https://baike.baidu.com/item/%E9%81%BF%E9%A3%8E%E6%B8%AF%E5%8E%9F%E5%88%99" target="_blank">避风港原则</a>
 </div>
 <!-- end footer -->
 </body>
