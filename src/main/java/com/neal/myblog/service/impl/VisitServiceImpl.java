@@ -3,12 +3,13 @@ package com.neal.myblog.service.impl;
 import com.neal.myblog.entity.TVisit;
 import com.neal.myblog.repository.VisitRepository;
 import com.neal.myblog.service.VisitService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 类别service 实现类
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("visitService")
 public class VisitServiceImpl implements VisitService {
 
-    @Autowired
+    @Resource
     private VisitRepository visitRepository;
 
     @Override

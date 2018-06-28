@@ -3,9 +3,9 @@ package com.neal.myblog.service.impl;
 import com.neal.myblog.entity.TCategory;
 import com.neal.myblog.repository.CategoryRepository;
 import com.neal.myblog.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +17,7 @@ import java.util.List;
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
+    @Resource
     private CategoryRepository categoryRepository;
 
     @Override
